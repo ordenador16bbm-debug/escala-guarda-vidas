@@ -1,357 +1,582 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Escala de Guarda-Vidas Civis</title>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Escala GVC — Itapoá/SC</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6f4;color:#222}header{background:#0b5d1e;color:#fff;padding:18px;text-align:center}header h1{margin:0;font-size:22px}header p{margin:6px 0}.container{max-width:1200px;margin:18px auto;padding:0 12px}.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 2px 10px #0001}.login{max-width:430px;margin:45px auto}h2{margin-top:0;color:#0b5d1e}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid-2{grid-template-columns:repeat(2,1fr)}.grid-1{grid-template-columns:1fr}label{display:block;font-weight:bold;margin:8px 0 5px}input,select,button{width:100%;padding:11px;border:1px solid #bbb;border-radius:8px;font-size:15px}button{cursor:pointer;font-weight:bold}.btn{background:#0b5d1e;color:white;margin-top:12px}.btn2{background:#e8f2ea;color:#0b5d1e;margin-top:10px}.btn-export{width:auto;display:inline-block;margin-right:10px;padding:10px 18px;font-size:14px;border-radius:8px}.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}.top button{width:auto;background:#b00020;color:white}.status{padding:10px;border-radius:8px;background:#eef7ef;margin-top:10px}.status-alerta{background:#fff3cd;color:#856404;border-left:4px solid #ffc107}.hidden{display:none}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}.day{background:#f8faf8;border:1px solid #ccc;min-height:52px}.day.selected{background:#0b5d1e;color:white}.day.has{font-weight:bold;border:2px solid #198754}.day.outro{border-color:#b00020;background:#fff0f2}.day small{display:block;font-size:10px;margin-top:3px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{border:1px solid #ccc;padding:7px;text-align:center}th{background:#dfeee2;position:sticky;top:0}td:nth-child(4){font-weight:bold}td button{width:auto;padding:5px 9px}.bloqueado{background:#f3f4f6;color:#666;cursor:not-allowed;opacity:.8}.muted{color:#777;font-weight:normal!important}@media(max-width:700px){.grid,.grid-2{grid-template-columns:1fr}.calendar{gap:4px}.day{padding:7px 2px;font-size:13px}}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f3f6f4;color:#222;line-height:1.3;padding:10px}
+header{background:linear-gradient(90deg,#006633,#008040);color:#fff;padding:12px;text-align:center;border-radius:8px;margin-bottom:15px}
+header h1{font-size:18px}
+.container{max-width:1200px;margin:0 auto}
+.card{background:#fff;border-radius:10px;padding:15px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.hidden{display:none !important}
+.lista-nomes{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px}
+.nome-btn{padding:16px;background:linear-gradient(135deg,#2980b9,#3498db);color:white;border:none;border-radius:8px;cursor:pointer;font-size:15px;text-align:left;transition:.2s}
+.nome-btn:hover{transform:translateY(-2px)}
+.nome-btn.admin{background:linear-gradient(135deg,#b00020,#d62030);grid-column:1 / -1}
+.nome-btn .cpf{font-size:12px;opacity:.8;display:block;margin-top:4px}
+.senha-box{margin-top:20px;padding:20px;background:#f9f9f9;border-radius:8px}
+.senha-box input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}
+.senha-box button{padding:12px;border:none;border-radius:6px;font-size:15px;cursor:pointer;width:100%;margin-top:8px}
+.btn-entrar{background:#006633;color:white}
+.btn-voltar{background:#eee;color:#333}
+.top-bar{display:flex;justify-content:space-between;align-items:center;background:#eef7ee;padding:10px 12px;border-radius:8px;margin-bottom:15px;flex-wrap:wrap;gap:10px}
+.btn-sair{background:#d32f2f;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer}
+.btn-travar{background:#f57c00;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
+.btn-destravar{background:#2e7d32;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
+.aviso-travado{background:#fff3cd;color:#856404;padding:12px;border-radius:6px;border-left:4px solid #ffc107;margin-bottom:15px;font-weight:bold}
+.aviso-limite{background:#e3f2fd;color:#0d47a1;padding:10px;border-radius:6px;border-left:4px solid #2196f3;margin:10px 0}
+.calendario{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:15px 0}
+.dia-btn{padding:8px 4px;border:1px solid #ccc;background:#e8eedc;border-radius:6px;cursor:pointer;font-size:13px;text-align:center}
+.dia-btn.selecionado{background:#000;color:white;border-color:#000}
+.dia-btn.tem-escala{background:#90ee90;border-color:#2e7d32}
+.area-gvc{background:#f0f7ff;border-left:4px solid #3498db;padding:14px;border-radius:0 8px 8px 0;margin-bottom:15px}
+.area-admin{background:#f4f0ff;border-left:4px solid #2962ff;padding:14px;border-radius:0 8px 8px 0;margin-bottom:15px}
+.grid-campos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.campo label{display:block;font-weight:bold;margin-bottom:5px;font-size:13px}
+.campo select{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:13px}
+.btn-confirmar{background:#006633;color:white;border:none;padding:11px 20px;border-radius:6px;font-size:14px;cursor:pointer;margin-top:10px}
+.btn-cancelar{background:#e0e0e0;color:#333;border:none;padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin:8px 4px}
+.btn-limpar-tudo{background:#d32f2f;color:white;border:none;padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin:8px 4px}
+.btn-excluir{background:#d32f2f;color:white;border:none;padding:1px 5px;border-radius:4px;cursor:pointer;font-size:10px;margin-left:4px}
+.tabela-wrap{overflow-x:auto;border:1px solid #ddd;border-radius:8px;background:#fff;margin-top:10px}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th,td{border:1px solid #bbb;padding:3px 2px;text-align:center;vertical-align:middle;font-size:9px;line-height:1.2}
+th{background:#f5f5f5;font-weight:bold;font-size:8px;white-space:nowrap}
+th.fixo,td.fixo{position:sticky;left:0;background:#fff;width:45px;min-width:45px}
+th.fixo{background:#f5f5f5}
+td.limite-ok{background:#e8f5e9}
+td.limite-excedido{background:#ffebee}
+.nome-linha{margin:1px 0 2px;padding:1px 3px;border-radius:3px;font-size:8px;line-height:1.2;font-weight:bold;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.exportar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
+.btn-pdf{background:#d32f2f;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
+.btn-planilha{background:#1976d2;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
+@page{size:A4 landscape;margin:6mm 4mm}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;padding:0;font-size:8px}
+  header,.top-bar,.area-gvc,.area-admin,.exportar,.btn-cancelar,.btn-limpar-tudo,.btn-confirmar,.senha-box,.lista-nomes,.btn-excluir,.aviso-limite,.calendario,.grid-campos,h3{display:none !important}
+  .card{box-shadow:none;border:0;padding:0;margin:0;width:100%}
+  .tabela-wrap{border:0;overflow:visible;margin:0}
+  table{width:100%;table-layout:fixed}
+  th,td{padding:2px 1px;font-size:7px;border-width:1px}
+  .nome-linha{font-size:7px;line-height:1.1}
+  tr{page-break-inside:avoid}
+  thead{display:table-header-group}
+}
+@media(max-width:768px){
+  .grid-campos{grid-template-columns:1fr}
+  .calendario{grid-template-columns:repeat(7,1fr);gap:3px}
+  .dia-btn{padding:7px 2px;font-size:12px}
+  th,td{font-size:8px;padding:2px 1px}
+  .nome-linha{font-size:7px}
+}
 </style>
-<style>
-.table-wrap{overflow-x:auto;width:100%;border:1px solid #d9dee7;border-radius:12px;background:#fff}.table-wrap table{border-collapse:separate;border-spacing:0;min-width:max-content}.table-wrap th,.table-wrap td{min-width:82px;height:46px;padding:5px 6px;text-align:center;border-right:1px solid #e1e5eb;border-bottom:1px solid #e1e5eb;white-space:nowrap;font-size:12px}.table-wrap th{position:sticky;top:0;background:#f3f6fa;z-index:2;cursor:pointer}.table-wrap th small{display:block;font-size:10px;font-weight:500;opacity:.7}.table-wrap .fixo{position:sticky;z-index:3;background:#fff}.table-wrap th.fixo{z-index:4;background:#f3f6fa;cursor:default}.posto-col{left:0;min-width:62px!important}.horario-col{left:62px;min-width:92px!important}.table-wrap td.dia-atual{background:#eef6ff}.table-wrap th.dia-atual{background:#dbeeff}.table-wrap td span{font-size:11px}.table-wrap .vazio{opacity:.25}.mini-excluir{display:block;margin:2px auto 0;border:0;background:transparent;cursor:pointer;font-weight:700;font-size:14px;line-height:14px}.area-exportar{margin:15px 0;padding:12px;background:#eef7ef;border-radius:10px;border-left:4px solid #0b5d1e}.info-mes{background:#eef7ef;padding:10px;border-radius:8px;margin:10px 0}@media(max-width:700px){.table-wrap th,.table-wrap td{min-width:76px}.horario-col{left:62px;min-width:88px!important}}
-</style>
-<!-- Bibliotecas -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-<header><h1>🏖️ Escala de Guarda-Vidas Civis</h1><p>Turno: 07:30 às 18:30 · Postos 00 a 23 · Itapoá - SC</p></header>
-<div id="login" class="container"><div class="card login"><h2>🔐 Acesso</h2><p>Versão de teste com nomes fictícios.</p><label>Usuário</label><select id="usuarioLogin"><option>ADMIN</option><option>GUARDA 01</option><option>GUARDA 02</option><option>GUARDA 03</option><option>GUARDA 04</option><option>GUARDA 05</option></select><label>Senha</label><input id="senhaLogin" type="password" placeholder="123456"><button class="btn" id="entrarBtn">Entrar</button><div id="loginMsg" class="status hidden"></div></div></div>
-<div id="app" class="hidden"><div class="container"><div class="card top"><div>👤 <b id="usuarioNome"></b> — <span id="perfil"></span></div><button id="sairBtn">Sair</button></div>
+<header>
+  <h1>🏖️ Escala GVC — Itapoá/SC</h1>
+  <p>Turno: 07:30 às 18:30 · Postos 00 a 23</p>
+</header>
 
-<!-- Área do ADMIN: pode fixar o mês -->
-<div id="adminConfig" class="card hidden">
-  <h2>⚙️ Configuração da Escala</h2>
-  <div class="grid grid-2">
-    <div>
-      <label>Mês da Escala (fixo para todos)</label>
-      <select id="mesFixo"></select>
+<div id="telaLogin" class="container">
+  <div class="card">
+    <h2>🔐 Acesso — clique no seu nome</h2>
+    <div class="lista-nomes" id="listaNomes">
+      <p style="text-align:center;padding:20px;color:#666">Carregando nomes...</p>
     </div>
-    <div>
-      <label>Status</label>
-      <div style="padding:10px;background:#eef7ef;border-radius:8px">
-        <span id="statusFixo">Não fixado</span>
-      </div>
-    </div>
-  </div>
-  <button class="btn" id="fixarMesBtn">📌 Fixar este mês para todos</button>
-  <div class="status status-alerta">
-    💡 Ao fixar, os guardas só conseguem lançar neste mês e não alteram o que já foi preenchido por outros.
   </div>
 </div>
 
-<!-- Área do Guarda: mostra o mês fixo sem permitir alterar -->
-<div id="guardaMesFixo" class="card hidden">
-  <h2>📅 Escala — <span id="mesExibicao"></span></h2>
-  <div class="info-mes">
-    📌 Escala fixada pela administração — <b>não é possível alterar o mês</b>.
+<div id="telaSenha" class="container hidden">
+  <div class="card">
+    <h2>🔐 Administrador</h2>
+    <div class="senha-box">
+      <label style="font-weight:bold">Senha:</label>
+      <input type="password" id="inpSenha" placeholder="Digite a senha...">
+      <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
+      <button class="btn-voltar" onclick="voltarLista()">Voltar</button>
+    </div>
   </div>
 </div>
 
-<div id="lancarArea" class="card hidden">
-  <h2>📅 Lançar escala</h2>
-  <div id="mesSelectDiv" class="grid grid-2">
-    <div>
-      <label>Mês</label>
-      <select id="mes"></select>
-    </div>
-    <div>
-      <label>Posto</label>
-      <select id="posto"></select>
+<div id="telaApp" class="container hidden">
+  <div class="top-bar">
+    <div>👤 <span id="nomeUsuario"></span> — <span id="perfilUsuario"></span></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="lblMes" style="font-weight:bold"></span>
+      <button id="btnTravar" class="btn-travar hidden" onclick="travar()">🔒 Travar</button>
+      <button id="btnDestravar" class="btn-destravar hidden" onclick="destravar()">🔓 Destravar</button>
+      <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
-  <div id="mesSelectFixo" class="grid grid-1 hidden">
-    <div>
-      <label>Posto</label>
-      <select id="postoFixo"></select>
-    </div>
-  </div>
-  <div class="grid grid-2" id="guardaSelectDiv">
-    <div>
-      <label>Guarda-Vidas</label>
-      <select id="guarda"></select>
-    </div>
-  </div>
-  <div class="status">🕢 Horário: <b>07:30 às 18:30</b></div>
-  <h3>Calendário</h3>
-  <div id="calendario" class="calendar"></div>
-  <button class="btn" id="salvarBtn">💾 Confirmar minha escala</button>
-  <button class="btn2" id="limparBtn">Limpar meus campos</button>
-  <div id="msg" class="status hidden"></div>
-</div>
+  <div id="avisoTravado" class="aviso-travado hidden">🔒 Mês travado</div>
 
-<div class="card">
-  <h2>🏖️ Escala mensal — <span id="tituloMes"></span></h2>
-  <div id="areaExportar" class="area-exportar hidden">
-    <strong>📤 Exportar escala:</strong>
-    <div style="margin-top:8px">
-      <button class="btn btn-export" id="btnPDF">📄 Gerar PDF</button>
-      <button class="btn2 btn-export" id="btnXLS">📊 Gerar Planilha</button>
+  <div id="areaGVC" class="area-gvc hidden">
+    <h3>📋 Minha Escala — <span id="nomeGVC"></span></h3>
+    <div class="aviso-limite">ℹ️ Selecione Posto → Dia → Confirmar</div>
+    <div class="grid-campos">
+      <div class="campo"><label>Mês</label><select id="selMesGVC"></select></div>
+      <div class="campo"><label>Posto</label><select id="selPostoGVC"></select></div>
+      <div class="campo"><label>Guarda</label><select id="selGuardaGVC" disabled></select></div>
     </div>
+    <p style="margin:10px 0;font-weight:bold">Calendário</p>
+    <div id="calGVC" class="calendario"></div>
+    <button class="btn-confirmar" onclick="confirmarGVC()">✅ Confirmar</button><br>
+    <button class="btn-cancelar" onclick="limparMeusDados()">🗑️ Cancelar minha escala</button>
+    <p id="avisoMsg" style="color:#d32f2f;font-weight:bold;margin-top:10px;display:none"></p>
   </div>
-  <div id="resumo"></div>
-  <div class="table-wrap">
-    <table><thead><tr><th>Posto</th><th>Horário</th><th>Dia</th><th>Guarda-Vidas</th><th>Ação</th></tr></thead><tbody id="tabela"></tbody></table>
+
+  <div id="areaAdmin" class="area-admin hidden">
+    <h3>📋 Escala — Administrador</h3>
+    <div class="aviso-limite">📋 Cada pessoa tem cor única · Limite: 5 por posto/dia</div>
+    <div class="grid-campos">
+      <div class="campo"><label>Mês</label><select id="selMes"></select></div>
+      <div class="campo"><label>Posto</label><select id="selPosto"></select></div>
+      <div class="campo"><label>Guarda</label><select id="selGuarda"></select></div>
+    </div>
+    <p style="margin:10px 0;font-weight:bold">Calendário</p>
+    <div id="calAdmin" class="calendario"></div>
+    <button class="btn-confirmar" onclick="confirmarAdmin()">✅ Adicionar</button><br>
+    <button class="btn-cancelar" onclick="limparCampos()">🗑️ Limpar campos</button>
+    <button class="btn-limpar-tudo" onclick="limparTudo()">⚠️ Apagar TUDO</button>
+  </div>
+
+  <div class="card">
+    <h3>📅 Escala — <span id="mesAno"></span></h3>
+    <div class="exportar" id="areaExportar">
+      <button class="btn-pdf" onclick="gerarPDF()">📄 PDF</button>
+      <button class="btn-planilha" onclick="exportarXLS()">📊 Planilha</button>
+      <span id="resumo" style="margin-left:10px;color:#666"></span>
+    </div>
+    <div class="tabela-wrap"><table id="tabela"></table></div>
   </div>
 </div>
-
-</div></div>
 
 <script>
-const guardas=['GUARDA 01','GUARDA 02','GUARDA 03','GUARDA 04','GUARDA 05'];
-const postos=Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));
-const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const diasSemanaLetra = ['D','S','T','Q','Q','S','S'];
-const KEY='escalaGVCivisTeste';
-const KEY_MES_FIXO='escalaMesFixo';
-let usuario=null, diaSelecionado=new Date().getDate(), escala={};
-try{escala=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){escala={}};
-const $=id=>document.getElementById(id);
-function ano(){return new Date().getFullYear()}
-function mesFixo(){const v=localStorage.getItem(KEY_MES_FIXO);return v!==null?Number(v):null}
-function mesAtual(){const fixo=mesFixo();return fixo!==null?fixo:Number($('mes').value)}
-function chave(d){return `${ano()}-${String(mesAtual()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
-function diasNoMes(){return new Date(ano(), mesAtual()+1, 0).getDate()}
+const SENHA_ADMIN = "guarda2026";
+const chaveDados = "escala_itapoa_dados";
+const chaveTravada = "escala_travada_mes";
+const CIDADE = "Itapoá";
+const PRAIA = "Itapoá";
+const TP_ESCALA = "S";
+const LIMITE_SERVICO = 5;
+const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const postos = Array.from({length:24}, (_,i) => String(i).padStart(2,'0'));
 
-// === EXPORTAÇÃO ===
-function gerarDadosExportacao(){
-  const mesNome = meses[mesAtual()];
-  const anoAtual = ano();
-  const n = diasNoMes();
-  const dados = [];
-  const cabecalho = ['Posto', 'Horário'];
-  for(let d=1;d<=n;d++){
-    const data = new Date(anoAtual, mesAtual(), d);
-    cabecalho.push(`${d}\n${diasSemanaLetra[data.getDay()]}`);
-  }
-  dados.push(cabecalho);
-  for(const p of postos){
-    const linha = [p, '07:30–18:30'];
-    for(let d=1;d<=n;d++){
-      const k = `${ano()}-${String(mesAtual()+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      linha.push((escala[k]||{})[p] || '');
+const ignorar = ['de','da','do','dos','das','e','na','no','nas','nos','a','o','os','as'];
+
+const coresFundo = [
+  '#ffeb99','#ffd9b3','#ffc9c9','#f8c8f0','#dccbff','#c4e0ff','#b3e5e0','#b3f0c8',
+  '#e6f5b3','#f2f2b3','#ffd966','#ffb380','#ff9999','#f299e0','#b399ff','#80b3ff',
+  '#66ccff','#66e0cc','#66e699','#ccee66','#eedd66','#ffcc66','#ff9966','#ff8080',
+  '#e680cc','#b380ff','#8099ff','#66b3ff','#66d9cc','#66cc99','#b3dd66','#eedd44'
+];
+
+function corPorNome(nome) {
+  let soma = 0;
+  for(let i=0; i<nome.length; i++) soma += nome.charCodeAt(i);
+  return coresFundo[soma % coresFundo.length];
+}
+
+function pegarDoisNomes(nomeCompleto) {
+  if (!nomeCompleto) return '';
+  const partes = nomeCompleto.trim().split(/\s+/);
+  if (partes.length === 1) return partes[0];
+  const primeiro = partes[0];
+  let segundo = '';
+  for (let i = 1; i < partes.length; i++) {
+    if (!ignorar.includes(partes[i].toLowerCase())) {
+      segundo = partes[i];
+      break;
     }
-    dados.push(linha);
   }
-  return {dados, mesNome, anoAtual};
+  if (!segundo) segundo = partes[partes.length - 1];
+  return primeiro + ' ' + segundo;
 }
 
-async function exportarPDF(){
-  if(usuario!=='ADMIN'){mostrar('⚠️ Apenas administrador pode exportar.');return;}
-  const {dados, mesNome, anoAtual} = gerarDadosExportacao();
-  const {jsPDF} = window.jspdf;
-  const doc = new jsPDF('l','mm','a4');
-  doc.setFillColor(11,93,30);
-  doc.rect(0,0,297,32,'F');
-  doc.setTextColor(255,255,255);
-  doc.setFontSize(18);doc.setFont('helvetica','bold');
-  doc.text('ESCALA DE SERVIÇO – GUARDA-VIDAS CIVIS', 148, 14, {align:'center'});
-  doc.setFontSize(12);doc.setFont('helvetica','normal');
-  doc.text(`Prefeitura Municipal de Itapoá / SC — ${mesNome} de ${anoAtual}`, 148, 22, {align:'center'});
-  doc.text(`Turno: 07:30 às 18:30 · Postos 00 a 23 · Atualizado em: ${new Date().toLocaleDateString('pt-BR')}`, 148, 29, {align:'center'});
-  doc.setTextColor(0,0,0);
-  doc.autoTable({
-    startY: 40,
-    head: [dados[0]],
-    body: dados.slice(1),
-    theme: 'grid',
-    styles: {fontSize:7.2,cellPadding:2.2,lineColor:[200,200,200]},
-    headStyles: {fillColor:[11,93,30],textColor:255,fontStyle:'bold',fontSize:8},
-    alternateRowStyles: {fillColor:[249,251,249]},
-    columnStyles: {0:{cellWidth:22,fontStyle:'bold'},1:{cellWidth:30}}
+const listaPessoas = [
+  { nome: "ADMINISTRADOR", perfil: "admin" },
+  { nome: "ADIRLEI PEDRO COELHO JÚNIOR" },
+  { nome: "ALISSON DA CUNHA" },
+  { nome: "ALONCIO VICENTE MARTINS" },
+  { nome: "ANDERSON DE SOUZA DOMINGUES" },
+  { nome: "ANDERSON JÚNIOR JUVÊNCIO" },
+  { nome: "ANDERSON WILLIAM BATISTA" },
+  { nome: "ANDRÉ DA SILVA OLKOSKI" },
+  { nome: "ANDRE JOSE DA SILVA" },
+  { nome: "ANTONIO JORGE BASTOS" },
+  { nome: "ANTÔNIO MARCOS LIMA DA SILVA" },
+  { nome: "ANTONIO PEDRO DA GRAÇA" },
+  { nome: "ANTONIO ROGERIO DE BORBA BECKER" },
+  { nome: "ARTHUR MARTINS SILVA" },
+  { nome: "CARLOS ALEXANDRE SILVA DE JESUS" },
+  { nome: "CARLOS EDUARDO PEREIRA AMARAL" },
+  { nome: "CELSO WILKER OLIVEIRA SANTOS" },
+  { nome: "CLEDISON LUIZ RAMOS DE JESUS" },
+  { nome: "DANIEL AFONSO KONZEN" },
+  { nome: "DANIEL SOARES GOMES" },
+  { nome: "DARLIM MAURILIO RODRIGUES DE MORAES" },
+  { nome: "DENIS DA SILVA OLKOSKI" },
+  { nome: "EDER SOARES GOMES" },
+  { nome: "EDUARDO GARCIA DE SOUZA" },
+  { nome: "ELIEZER MACHADO DO ROSÁRIO" },
+  { nome: "ELINAIANE DA SILVA DAVILA" },
+  { nome: "EVERALDO DA SILVA NEVES" },
+  { nome: "FÁBIO SOLEDADE" },
+  { nome: "FABRICIO CALDERON NETO" },
+  { nome: "FELIPE DOS SANTOS SILVA" },
+  { nome: "FELIPE SCUZZIATO" },
+  { nome: "FERNANDO FERREIRA" },
+  { nome: "FRANCIELY CHAGAS DA SILVA" },
+  { nome: "FRANCINE BAPTISTA DOS SANTOS" },
+  { nome: "GEANDRO SOARES GOMES" },
+  { nome: "GEORGE MARINHO CREDIDIO" },
+  { nome: "GILSON TAVARES JÚNIOR" },
+  { nome: "GUILHERME ANDRI" },
+  { nome: "GUILHERME HENRIQUE PEREIRA BORGES" },
+  { nome: "GUSTAVO LUIZ HITEL" },
+  { nome: "GUSTAVO ROHRBACHER" },
+  { nome: "HALAN CEZAR REIS" },
+  { nome: "HIGOR MATEUS MOURA DA SILVA" },
+  { nome: "JAIRO ROBERTO DOS SANTOS" },
+  { nome: "JÉSSICA VITOLA DE CARVALHO" },
+  { nome: "JOÃO PEDRO BONIN DE ALMEIDA" },
+  { nome: "JOÃO VICTOR VEIGA" },
+  { nome: "JOSÉ ADILSON RIBEIRO" },
+  { nome: "JOSÉ ROCHA DE SOUZA NETO" },
+  { nome: "JULIO WIELEWICKI FARINHA" },
+  { nome: "JULIANO MARCOS ZENI" },
+  { nome: "JÚLIO CESAR NASCIMENTO DOS SANTOS" },
+  { nome: "LAURO WILLIAM BATISTA" },
+  { nome: "LEONARDO VIEIRA DIAVÃO" },
+  { nome: "LILIANE CRISTINA LICHESKI" },
+  { nome: "LISANDRO FERREIRA" },
+  { nome: "LUAN FERREIRA" },
+  { nome: "LUIS HENRIQUE DE OLIVEIRA" },
+  { nome: "LUIZ AUGUSTO MARINHO CREDIDIO" },
+  { nome: "MARCELO WILLIAM XAVIER" },
+  { nome: "MARCOS VINÍCIUS FERREIRA" },
+  { nome: "MATEUS ALVES DA SILVA GOMES" },
+  { nome: "MATHEUS ALVES DOS SANTOS" },
+  { nome: "MICHAEL DA SILVA NUNES" },
+  { nome: "MIGUEL DE JESUS DA SILVA" },
+  { nome: "PAULO RICARDO DOS SANTOS" },
+  { nome: "PEDRO AUGUSTO PEREIRA" },
+  { nome: "RAFAEL MEDEIROS DUARTE" },
+  { nome: "REINALDO DE SOUZA KAZMIERCZAK" },
+  { nome: "RENAN AUGUSTO ROMAGNA DE PAULA" },
+  { nome: "ROBERTA MARINHO GOMES" },
+  { nome: "ROGÉRIO RICARDO DOS SANTOS" },
+  { nome: "RYAN CORDEIRO ESCHIPIO GONÇALVES" },
+  { nome: "THOMAS RODRIGO DA SILVEIRA RAMOS" },
+  { nome: "TIAGO MACHADO DO ROSÁRIO" },
+  { nome: "TOMÉ ONOFRE PEREIRA RAMOS" },
+  { nome: "VALDIRENE PEREIRA DOS SANTOS" },
+  { nome: "VANDERLEI NUNES DA SILVA" },
+  { nome: "VICTOR MARINHO CREDIDIO" },
+  { nome: "VINÍCIUS DO ROSÁRIO GUERREIRO" },
+  { nome: "WASHINGTON OLIVEIRA SANTOS" },
+  { nome: "WESLLEY DE MELO KLEIN" },
+  { nome: "WILLIAN HENRIQUE DE MELO KLEIN" },
+  { nome: "JOÃO GUILHERME FERREIRA LEITE" },
+  { nome: "ADRIANO ROBERTO PEKOCZ VIEIRA" },
+  { nome: "ALEX SANDRO CORREA DE SOUZA" },
+  { nome: "ALEX HENRIQUE AMORIM" },
+  { nome: "ALEF VINÍCIUS DE MELLO" },
+  { nome: "ARIEL BARCELLOS ANTÔNIO" },
+  { nome: "CRISTINA ALVES REINHOLD" },
+  { nome: "EDNILSON MOLIN" },
+  { nome: "EMERSON NUNES DO NASCIMENTO" },
+  { nome: "EMILY MONTIEL SUTIL" },
+  { nome: "GEOVANI DA SILVA" },
+  { nome: "GUILHERME SILVA ROSA" },
+  { nome: "HORTÊNCIA COSTA AMARAL" },
+  { nome: "JACQUELINE IASMIN FERREIRA DE MORAES" },
+  { nome: "JOÃO EMÍLIO SPECK DA CUNHA" },
+  { nome: "JOÃO VITOR BERGAMO" },
+  { nome: "JOSÉ FRANCISCO FILHO" },
+  { nome: "KAMILA APARECIDA ZENI" },
+  { nome: "LEANDRO MARTINS NEVES" },
+  { nome: "LÉO RODRIGO DE SOUZA" },
+  { nome: "MARCOS ANTÔNIO NICOLICHI" },
+  { nome: "MARCOS PAULO DE SOUZA OLIVEIRA" },
+  { nome: "MATEUS JOSÉ BARBOSA" },
+  { nome: "NICOLAS JOHAN ANDRETTA MELCHERT" },
+  { nome: "RENATO AUGUSTO DE BORBA BECKER" },
+  { nome: "THAÍS PESSOA DOS SANTOS CHAVES" },
+  { nome: "VINÍCIUS BARBOSA RITA" },
+  { nome: "ARIVALDO LOPES NETO" },
+  { nome: "HALEFF KEVIN DE LIMA OLIVEIRA" },
+  { nome: "SUELI DOS SANTOS SOUZA" },
+  { nome: "EWERTON MOURA DE FREITAS" },
+  { nome: "DANIEL MARTINS" },
+  { nome: "LUCAS DE SOUZA SEBASTIÃO" },
+  { nome: "DARLAN LUIZ MOURA DA SILVA" }
+];
+
+let usuarioLogado = null, ehAdmin = false;
+let mesAtual = new Date().getMonth(), anoAtual = new Date().getFullYear();
+let diaSelAdmin = new Date().getDate(), diaSelGVC = new Date().getDate();
+let escala = {};
+let mesTravado = null;
+
+function carregar() {
+  try { escala = JSON.parse(localStorage.getItem(chaveDados) || '{}'); } catch { escala = {}; }
+  const t = localStorage.getItem(chaveTravada);
+  if (t) mesTravado = JSON.parse(t);
+}
+function salvar() { localStorage.setItem(chaveDados, JSON.stringify(escala)); }
+
+function esconderTodas() {
+  document.querySelectorAll('#telaLogin,#telaSenha,#telaApp').forEach(el => el.classList.add('hidden'));
+}
+
+function mostrarLogin() {
+  esconderTodas();
+  const lista = document.getElementById('listaNomes');
+  lista.innerHTML = '';
+  
+  const btnAdm = document.createElement('button');
+  btnAdm.className = 'nome-btn admin';
+  btnAdm.textContent = '🔐 ADMINISTRADOR';
+  btnAdm.onclick = () => { esconderTodas(); document.getElementById('telaSenha').classList.remove('hidden'); };
+  lista.appendChild(btnAdm);
+  
+  listaPessoas.filter(p => p.perfil !== 'admin').forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'nome-btn';
+    btn.textContent = p.nome;
+    btn.onclick = () => { carregar(); usuarioLogado = p; ehAdmin = false; abrirApp(); };
+    lista.appendChild(btn);
   });
-  const pgs=doc.getNumberOfPages();
-  for(let i=1;i<=pgs;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(120,120,120);doc.text(`Página ${i} de ${pgs}`,148,205,{align:'center'});}
-  doc.save(`Escala_Guardas_${mesNome}_${anoAtual}.pdf`);
-  mostrar('✅ PDF gerado!');
+  
+  document.getElementById('telaLogin').classList.remove('hidden');
 }
 
-function exportarXLS(){
-  if(usuario!=='ADMIN'){mostrar('⚠️ Apenas administrador pode exportar.');return;}
-  const {dados, mesNome, anoAtual} = gerarDadosExportacao();
-  const cab=[
-    [`ESCALA DE SERVIÇO – GUARDA-VIDAS CIVIS – ${mesNome}/${anoAtual}`],
-    ['Prefeitura Municipal de Itapoá / SC'],
-    ['Turno: 07:30 às 18:30 | Postos 00 a 23'],
-    [`Gerado em: ${new Date().toLocaleDateString('pt-BR')}`],
-    []
-  ];
-  const wb=XLSX.utils.book_new();
-  const ws=XLSX.utils.aoa_to_sheet([...cab,...dados]);
-  ws['!cols']=[{wch:10},{wch:18},...Array(dados[0].length-2).fill({wch:11})];
-  ws['!freeze']={x:2,y:cab.length+1};
-  XLSX.utils.book_append_sheet(wb,ws,`${mesNome}_${anoAtual}`);
-  XLSX.writeFile(wb,`Escala_Guardas_${mesNome}_${anoAtual}.xlsx`);
-  mostrar('✅ Planilha gerada!');
-}
-// === FIM EXPORTAÇÃO ===
+function voltarLista() { mostrarLogin(); }
 
-function preencherSelects(){
-  [$('mesFixo'),$('mes')].forEach(s=>{s.innerHTML='';meses.forEach((m,i)=>s.add(new Option(m,i)));});
-  $('mes').value=new Date().getMonth();$('mesFixo').value=new Date().getMonth();
-  postos.forEach(p=>{
-    $('posto').add(new Option('Posto '+p,p));
-    $('postoFixo').add(new Option('Posto '+p,p));
-  });
-  guardas.forEach(g=>$('guarda').add(new Option(g,g)));
+function verificarSenha() {
+  if (document.getElementById('inpSenha').value === SENHA_ADMIN) {
+    usuarioLogado = { nome: 'ADMINISTRADOR', perfil: 'admin' };
+    ehAdmin = true;
+    carregar();
+    abrirApp();
+  } else { alert('Senha incorreta!'); document.getElementById('inpSenha').value = ''; }
 }
 
-function desenhar(){
-  const fixo=mesFixo();
-  const mNome=meses[mesAtual()];
-  $('tituloMes').textContent = `${mNome} / ${ano()}`;
-  $('mesExibicao').textContent = `${mNome} / ${ano()}`;
-  $('statusFixo').textContent = fixo!==null ? `✅ Fixado: ${meses[fixo]}` : 'Não fixado — clique para fixar';
-  $('areaExportar').classList.toggle('hidden', usuario!=='ADMIN');
-  $('adminConfig').classList.toggle('hidden', usuario!=='ADMIN');
-  $('lancarArea').classList.remove('hidden');
-  // Controle de exibição de mês
-  if(usuario==='ADMIN' && fixo===null){
-    $('mesSelectDiv').classList.remove('hidden');
-    $('mesSelectFixo').classList.add('hidden');
-    $('guardaMesFixo').classList.add('hidden');
-  }else{
-    $('mesSelectDiv').classList.add('hidden');
-    $('mesSelectFixo').classList.remove('hidden');
-    $('guardaMesFixo').classList.remove('hidden');
+function sair() { usuarioLogado = null; ehAdmin = false; mostrarLogin(); }
+
+function travar() {
+  mesTravado = { mes: mesAtual, ano: anoAtual };
+  localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
+  alert('🔒 Mês travado!'); abrirApp();
+}
+function destravar() {
+  if (confirm('Destravar?')) { mesTravado = null; localStorage.removeItem(chaveTravada); alert('🔓 Destravado!'); abrirApp(); }
+}
+
+function diasNoMes() { return new Date(anoAtual, mesAtual+1, 0).getDate(); }
+function chave(d) { return `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+function usuarioJaMarcou(chaveDia, nome) {
+  const dia = escala[chaveDia] || {};
+  for (const p in dia) if ((dia[p] || []).includes(nome)) return true;
+  return false;
+}
+
+function abrirApp() {
+  esconderTodas();
+  document.getElementById('telaApp').classList.remove('hidden');
+  document.getElementById('nomeUsuario').textContent = usuarioLogado.nome;
+  document.getElementById('perfilUsuario').textContent = ehAdmin ? 'ADMIN' : 'GVC';
+  document.getElementById('lblMes').textContent = mesTravado ? `🔒 ${meses[mesTravado.mes]}/${anoAtual}` : `${meses[mesAtual]}/${anoAtual}`;
+  document.getElementById('btnTravar').classList.toggle('hidden', !(ehAdmin && !mesTravado));
+  document.getElementById('btnDestravar').classList.toggle('hidden', !(ehAdmin && mesTravado));
+  document.getElementById('avisoTravado').classList.toggle('hidden', !mesTravado);
+  document.getElementById('areaAdmin').classList.toggle('hidden', !ehAdmin);
+  document.getElementById('areaGVC').classList.toggle('hidden', ehAdmin);
+  document.getElementById('areaExportar').classList.toggle('hidden', !ehAdmin);
+  if (!ehAdmin) document.getElementById('nomeGVC').textContent = usuarioLogado.nome;
+  montarSeletores();
+  desenharTudo();
+}
+
+function montarSeletores() {
+  const selMes = document.getElementById('selMes');
+  selMes.innerHTML = ''; meses.forEach((m,i) => selMes.appendChild(new Option(`${m}/${anoAtual}`,i)));
+  selMes.value = mesAtual;
+  selMes.onchange = () => { mesAtual = +selMes.value; diaSelAdmin = Math.min(diaSelAdmin, diasNoMes()); desenharTudo(); };
+  
+  const selMesGVC = document.getElementById('selMesGVC');
+  selMesGVC.innerHTML = ''; meses.forEach((m,i) => selMesGVC.appendChild(new Option(`${m}/${anoAtual}`,i)));
+  selMesGVC.value = mesAtual; selMesGVC.disabled = !!mesTravado;
+  selMesGVC.onchange = () => { if(!mesTravado){ mesAtual = +selMesGVC.value; diaSelGVC = Math.min(diaSelGVC, diasNoMes()); desenharTudo(); } };
+  
+  const selPosto = document.getElementById('selPosto');
+  selPosto.innerHTML = ''; postos.forEach(p => selPosto.appendChild(new Option(`Posto ${p}`,p)));
+  const selPostoGVC = document.getElementById('selPostoGVC');
+  selPostoGVC.innerHTML = ''; postos.forEach(p => selPostoGVC.appendChild(new Option(`Posto ${p}`,p)));
+  
+  const selGuarda = document.getElementById('selGuarda');
+  selGuarda.innerHTML = '';
+  listaPessoas.filter(p => p.perfil !== 'admin').forEach(p => selGuarda.appendChild(new Option(p.nome, p.nome)));
+  
+  const selGuardaGVC = document.getElementById('selGuardaGVC');
+  selGuardaGVC.innerHTML = '';
+  selGuardaGVC.appendChild(new Option(usuarioLogado.nome, usuarioLogado.nome));
+}
+
+function desenharCal(container, diaSel, ehAdminCal, callback) {
+  const c = document.getElementById(container);
+  if (!c) return; c.innerHTML = '';
+  const q = diasNoMes();
+  for (let d=1; d<=q; d++) {
+    const ch = chave(d);
+    let tem = false;
+    if (ehAdminCal) tem = Object.keys(escala[ch]||{}).length > 0;
+    else tem = usuarioJaMarcou(ch, usuarioLogado?.nome);
+    const btn = document.createElement('button');
+    btn.className = 'dia-btn' + (d===diaSel ? ' selecionado' : '') + (tem ? ' tem-escala' : '');
+    btn.textContent = String(d).padStart(2,'0');
+    btn.onclick = () => callback(d);
+    c.appendChild(btn);
   }
-  if(usuario!=='ADMIN'){
-    $('guardaSelectDiv').classList.add('hidden');
-  }else{
-    $('guardaSelectDiv').classList.remove('hidden');
-  }
-  diaSelecionado=Math.min(diaSelecionado,diasNoMes());
-  desenharCalendario();desenharTabela();
 }
 
-function desenharCalendario(){
-  const c=$('calendario');c.innerHTML='';
-  for(let d=1;d<=diasNoMes();d++){
-    const k=chave(d),obj=escala[k]||{};
-    const qtd=usuario==='ADMIN'?Object.keys(obj).length:Object.values(obj).filter(x=>x===usuario).length;
-    const outro=usuario!=='ADMIN' && Object.values(obj).some(v=>v && v!==usuario);
-    const b=document.createElement('button');
-    b.type='button';
-    let cls='day'+(d===diaSelecionado?' selected ':'')+(qtd?' has':'');
-    if(outro)cls+=' outro';
-    b.className=cls;
-    b.innerHTML=String(d).padStart(2,'0')+(qtd?`<small>✓ ${qtd}</small>`:'<small> </small>');
-    b.onclick=()=>{diaSelecionado=d;desenharCalendario()};
-    c.appendChild(b);
+function desenharTabela() {
+  const tab = document.getElementById('tabela');
+  const q = diasNoMes();
+  let html = '<thead><tr><th class="fixo">Posto</th>';
+  for(let d=1;d<=q;d++){
+    const dt = new Date(anoAtual,mesAtual,d);
+    const sem = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][dt.getDay()];
+    html += `<th>${String(d).padStart(2,'0')}<br><small>${sem}</small></th>`;
   }
-}
-
-function desenharTabela(){
-  const t=$('tabela');
-  const table=t.closest('table');
-  const thead=table.querySelector('thead');
-  thead.innerHTML='';t.innerHTML='';
-  const n=diasNoMes();
-  const h=document.createElement('tr');
-  h.innerHTML='<th class="fixo posto-col">Posto</th><th class="fixo horario-col">Horário</th>';
-  for(let d=1;d<=n;d++){
-    const th=document.createElement('th');
-    const data=new Date(ano(),mesAtual(),d);
-    th.innerHTML=`${String(d).padStart(2,'0')}<small>${diasSemanaLetra[data.getDay()]}</small>`;
-    if(d===diaSelecionado)th.className='dia-atual';
-    th.onclick=()=>{diaSelecionado=d;desenhar()};
-    h.appendChild(th);
-  }
-  thead.appendChild(h);
-  let total=0, totalMe=0;
-  for(const p of postos){
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td class="fixo posto-col"><b>${p}</b></td><td class="fixo horario-col">07:30–18:30</td>`;
-    for(let d=1;d<=n;d++){
-      const k=chave(d),g=(escala[k]||{})[p]||'';
-      const meu=g===usuario;
-      const outro=g && g!==usuario;
-      if(meu)totalMe++;
-      if(g && (usuario==='ADMIN' || meu))total++;
-      const td=document.createElement('td');
-      if(d===diaSelecionado)td.className='dia-atual';
-      if(g){
-        td.innerHTML=`<span>${g.replace('GUARDA ','G. ')}</span>`;
-        if(usuario==='ADMIN'){
-          const b=document.createElement('button');
-          b.className='mini-excluir';b.type='button';b.textContent='×';b.title='Excluir';
-          b.onclick=e=>{e.stopPropagation();excluir(k,p)};
-          td.appendChild(b);
-        }
-        if(outro && usuario!=='ADMIN')td.classList.add('bloqueado');
-      }else td.innerHTML='<span class="vazio">—</span>';
-      td.onclick=()=>{
-        if(outro && usuario!=='ADMIN'){mostrar('⛔ Já preenchido por outro guarda — não pode alterar.');return;}
-        diaSelecionado=d;
-        $('posto').value=p;$('postoFixo').value=p;
-        if(usuario==='ADMIN' && g)$('guarda').value=g;
-        desenhar();
-      };
-      tr.appendChild(td);
+  html += '</tr></thead><tbody>';
+  let total=0;
+  postos.forEach(posto=>{
+    html += `<tr><td class="fixo"><strong>${posto}</strong></td>`;
+    for(let d=1;d<=q;d++){
+      const ch = chave(d);
+      const dia = escala[ch] || {};
+      const nomesNoPosto = dia[posto] || [];
+      const qtd = nomesNoPosto.length;
+      const classe = qtd>0 ? (qtd<=LIMITE_SERVICO ? 'limite-ok' : 'limite-excedido') : '';
+      const visiveis = ehAdmin ? nomesNoPosto : nomesNoPosto.filter(n => n === usuarioLogado?.nome);
+      if(visiveis.length) total++;
+      html += `<td class="${classe}">`;
+      if(visiveis.length){
+        html += visiveis.map(n=>{
+          const podeExcluir = ehAdmin || n === usuarioLogado?.nome;
+          const nomeExibir = ehAdmin ? pegarDoisNomes(n) : n;
+          const corFundo = corPorNome(n);
+          return `<div class="nome-linha" style="background:${corFundo}">${nomeExibir}${podeExcluir?`<button class="btn-excluir" onclick="excluirNome('${ch}','${posto}','${n}')">×</button>`:''}</div>`;
+        }).join('');
+      }
+      if(ehAdmin && qtd>0) html += `<small>${qtd}/${LIMITE_SERVICO}</small>`;
+      html += '</td>';
     }
-    t.appendChild(tr);
+    html += '</tr>';
+  });
+  tab.innerHTML = html+'</tbody>';
+  document.getElementById('resumo').textContent = `${total} inscrições`;
+}
+
+function desenharTudo() {
+  document.getElementById('mesAno').textContent = `${meses[mesAtual]}/${anoAtual}`;
+  desenharCal('calAdmin', diaSelAdmin, true, d=>{diaSelAdmin=d;desenharTudo();});
+  desenharCal('calGVC', diaSelGVC, false, d=>{diaSelGVC=d;desenharTudo();});
+  desenharTabela();
+}
+
+function excluirNome(chaveDia, posto, nome) {
+  if(!confirm(`Remover ${pegarDoisNomes(nome)} do Posto ${posto}?`)) return;
+  const dia = escala[chaveDia];
+  if(dia && dia[posto]){
+    dia[posto] = dia[posto].filter(n => n !== nome);
+    if(dia[posto].length === 0) delete dia[posto];
+    if(Object.keys(dia).length === 0) delete escala[chaveDia];
+    salvar(); desenharTudo();
   }
-  $('resumo').innerHTML=usuario==='ADMIN'
-    ?`<b>${total}</b> marcações no mês.`
-    :`Suas marcações: <b>${totalMe}</b> · Outros já preenchidos estão bloqueados 🔒`;
 }
 
-function entrar(){
-  if($('senhaLogin').value!=='123456'){
-    $('loginMsg').textContent='Senha incorreta. Use 123456.';
-    $('loginMsg').classList.remove('hidden');return;
+function confirmarAdmin() {
+  const posto = document.getElementById('selPosto').value;
+  const nome = document.getElementById('selGuarda').value;
+  const ch = chave(diaSelAdmin);
+  if (!escala[ch]) escala[ch] = {};
+  if (!escala[ch][posto]) escala[ch][posto] = [];
+  if (!escala[ch][posto].includes(nome)) {
+    escala[ch][posto].push(nome);
+    salvar(); desenharTudo();
+    alert(`✅ ${pegarDoisNomes(nome)} — Posto ${posto} — Dia ${diaSelAdmin}`);
+  } else { alert(`${pegarDoisNomes(nome)} já está neste posto/dia.`); }
+}
+
+function confirmarGVC() {
+  const posto = document.getElementById('selPostoGVC').value;
+  const ch = chave(diaSelGVC);
+  const nome = usuarioLogado.nome;
+  const aviso = document.getElementById('avisoMsg');
+  if (usuarioJaMarcou(ch, nome)) {
+    aviso.textContent = '⚠️ Você já está inscrito(a) neste dia!';
+    aviso.style.display = 'block';
+    setTimeout(()=>aviso.style.display='none',4000);
+    return;
   }
-  usuario=$('usuarioLogin').value;
-  $('login').classList.add('hidden');$('app').classList.remove('hidden');
-  $('usuarioNome').textContent=usuario;
-  $('perfil').textContent=usuario==='ADMIN'?'ADMINISTRADOR':'GUARDA-VÍDAS';
-  $('guarda').value=usuario==='ADMIN'?guardas[0]:usuario;
-  desenhar();
+  if (!escala[ch]) escala[ch] = {};
+  if (!escala[ch][posto]) escala[ch][posto] = [];
+  escala[ch][posto].push(nome);
+  salvar(); desenharTudo();
+  alert(`✅ Confirmado!\nPosto ${posto} — Dia ${diaSelGVC}`);
 }
 
-function salvar(){
-  if(!usuario)return;
-  const k=chave(diaSelecionado);
-  const p=$('posto').value || $('postoFixo').value;
-  const g=usuario==='ADMIN'?$('guarda').value:usuario;
-  if(!escala[k])escala[k]={};
-  // BLOQUEIO: Guarda não sobrescreve o que outro já marcou
-  if(escala[k][p] && escala[k][p]!==usuario && usuario!=='ADMIN'){
-    mostrar('⛔ Este posto/dia já foi preenchido por outro guarda — não pode alterar.');return;
+function limparCampos() { document.getElementById('selPosto').selectedIndex = 0; document.getElementById('selGuarda').selectedIndex = 0; }
+function limparMeusDados() {
+  if(confirm('Cancelar sua escala?')){
+    const ch = chave(diaSelGVC);
+    const nome = usuarioLogado.nome;
+    if(escala[ch]){
+      for(const p in escala[ch]){
+        escala[ch][p] = escala[ch][p].filter(n => n !== nome);
+        if(escala[ch][p].length === 0) delete escala[ch][p];
+      }
+      if(Object.keys(escala[ch]).length === 0) delete escala[ch];
+    }
+    salvar(); desenharTudo(); alert('✅ Cancelado!');
   }
-  escala[k][p]=g;
-  localStorage.setItem(KEY,JSON.stringify(escala));
-  mostrar(`✅ Salvo: Posto ${p} — Dia ${String(diaSelecionado).padStart(2,'0')} — ${g}`);
-  desenhar();
+}
+function limparTudo() {
+  if(!ehAdmin) return;
+  if(confirm('⚠️ APAGAR TUDO?')){escala={};salvar();desenharTudo();alert('✅ Limpo!');}
 }
 
-function excluir(k,p){
-  if(usuario!=='ADMIN')return;
-  if(escala[k]){delete escala[k][p];if(!Object.keys(escala[k]).length)delete escala[k];}
-  localStorage.setItem(KEY,JSON.stringify(escala));desenhar();
+function exportarXLS() {
+  const linhas = [["Cidade","Praia","Nome Completo","Tp Escala","Dt Escala"]];
+  const q = diasNoMes();
+  for(let d=1;d<=q;d++){
+    const dia = escala[chave(d)] || {};
+    for(const posto in dia){
+      dia[posto].forEach(nome => {
+        linhas.push([CIDADE, PRAIA, nome, TP_ESCALA, `${String(d).padStart(2,'0')}/${String(mesAtual+1).padStart(2,'0')}/${anoAtual}`]);
+      });
+    }
+  }
+  const csv = linhas.map(l => l.join(';')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Escala_${meses[mesAtual]}_${anoAtual}.xls`;
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
-function fixarMes(){
-  localStorage.setItem(KEY_MES_FIXO, $('mesFixo').value);
-  mostrar(`📌 Mês ${meses[$('mesFixo').value]} fixado para todos os guardas!`);
-  desenhar();
-}
+function gerarPDF() { window.print(); }
 
-function mostrar(txt){
-  $('msg').textContent=txt;$('msg').classList.remove('hidden');
-  setTimeout(()=>$('msg').classList.add('hidden'),4000);
-}
-
-function sair(){
-  usuario=null;$('app').classList.add('hidden');$('login').classList.remove('hidden');$('senhaLogin').value='';
-}
-
-// Eventos
-$('mes').onchange=()=>{diaSelecionado=Math.min(diaSelecionado,diasNoMes());desenhar();};
-$('fixarMesBtn').onclick=fixarMes;
-$('entrarBtn').onclick=entrar;
-$('senhaLogin').onkeydown=e=>{if(e.key==='Enter')entrar()};
-$('salvarBtn').onclick=salvar;
-$('sairBtn').onclick=sair;
-$('limparBtn').onclick=()=>{$('posto').selectedIndex=0;$('postoFixo').selectedIndex=0;};
-$('btnPDF').onclick=exportarPDF;
-$('btnXLS').onclick=exportarXLS;
-
-preencherSelects();
-</script></body></html>
+// INICIAR
+mostrarLogin();
+</script>
+</body>
+</html>
