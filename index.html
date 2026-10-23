@@ -25,6 +25,7 @@ header h1{font-size:18px}
 .btn-sair{background:#d32f2f;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer}
 .btn-travar{background:#f57c00;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
 .btn-destravar{background:#2e7d32;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
+.btn-sync{background:#673ab7;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:13px}
 .aviso-travado{background:#fff3cd;color:#856404;padding:12px;border-radius:6px;border-left:4px solid #ffc107;margin-bottom:15px;font-weight:bold}
 .aviso-limite{background:#e3f2fd;color:#0d47a1;padding:10px;border-radius:6px;border-left:4px solid #2196f3;margin:10px 0}
 .calendario{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:15px 0}
@@ -52,11 +53,15 @@ td.limite-excedido{background:#ffebee}
 .exportar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
 .btn-pdf{background:#d32f2f;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
 .btn-planilha{background:#1976d2;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
+.area-sync{background:#f3e5f5;border-radius:8px;padding:12px;margin:10px 0}
+.area-sync textarea{width:100%;height:80px;margin:8px 0;padding:8px;border:1px solid #ccc;border-radius:6px;font-size:11px;font-family:monospace}
+.btn-copiar{background:#2962ff;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;margin:4px}
+.btn-colar{background:#2e7d32;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;margin:4px}
 @page{size:A4 landscape;margin:6mm 4mm}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff;padding:0;font-size:8px}
-  header,.top-bar,.area-gvc,.area-admin,.exportar,.btn-cancelar,.btn-limpar-tudo,.btn-confirmar,.senha-box,.lista-nomes,.btn-excluir,.aviso-limite,.calendario,.grid-campos,h3{display:none !important}
+  header,.top-bar,.area-gvc,.area-admin,.exportar,.btn-cancelar,.btn-limpar-tudo,.btn-confirmar,.senha-box,.lista-nomes,.btn-excluir,.aviso-limite,.calendario,.grid-campos,h3,.area-sync{display:none !important}
   .card{box-shadow:none;border:0;padding:0;margin:0;width:100%}
   .tabela-wrap{border:0;overflow:visible;margin:0}
   table{width:100%;table-layout:fixed}
@@ -114,11 +119,23 @@ td.limite-excedido{background:#ffebee}
     <div>👤 <span id="nomeUsuario"></span> — <span id="perfilUsuario"></span></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span id="lblMes" style="font-weight:bold"></span>
+      <button id="btnSync" class="btn-sync hidden" onclick="abrirSync()">🔄 Sincronizar</button>
       <button id="btnTravar" class="btn-travar hidden" onclick="travar()">🔒 Travar</button>
       <button id="btnDestravar" class="btn-destravar hidden" onclick="destravar()">🔓 Destravar</button>
       <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
+
+  <!-- Área de Sincronização -->
+  <div id="areaSync" class="area-sync hidden">
+    <h4 style="margin:0 0 8px 0">🔄 Sincronizar entre aparelhos</h4>
+    <p style="font-size:12px;color:#666;margin:4px 0 8px">Copie os dados do computador → cole no celular → clique "Importar"</p>
+    <button class="btn-copiar" onclick="copiarDados()">📋 Copiar Dados</button>
+    <textarea id="caixaDados" placeholder="Cole os dados aqui e clique Importar"></textarea>
+    <button class="btn-colar" onclick="colarDados()">📥 Importar Dados</button>
+    <p style="font-size:11px;color:#d32f2f;margin:6px 0">⚠️ Importar substitui tudo que está no aparelho!</p>
+  </div>
+
   <div id="avisoTravado" class="aviso-travado hidden">🔒 Mês travado</div>
   <div id="areaGVC" class="area-gvc hidden">
     <h3>📋 Minha Escala — <span id="nomeGVC"></span></h3>
@@ -172,7 +189,6 @@ const coresFundo = [
   '#66ccff','#66e0cc','#66e699','#ccee66','#eedd66','#ffcc66','#ff9966','#ff8080'
 ];
 
-// LISTA COMPLETA COM SENHAS ALEATÓRIAS
 const listaPessoas = [
   { nome: "ADMINISTRADOR", perfil: "admin" },
   { nome: "ADIRLEI PEDRO COELHO JÚNIOR", senha: "7193" },
@@ -326,6 +342,37 @@ function carregar() {
   if (t) mesTravado = JSON.parse(t);
 }
 function salvar() { localStorage.setItem(chaveDados, JSON.stringify(escala)); }
+
+// FUNÇÕES DE SINCRONIZAÇÃO
+function abrirSync() {
+  document.getElementById('areaSync').classList.toggle('hidden');
+}
+function copiarDados() {
+  const dados = { escala, mesTravado };
+  const texto = btoa(unescape(encodeURIComponent(JSON.stringify(dados))));
+  document.getElementById('caixaDados').value = texto;
+  alert('✅ Dados copiados! Envie pelo WhatsApp e cole no outro aparelho.');
+}
+function colarDados() {
+  const texto = document.getElementById('caixaDados').value.trim();
+  if (!texto) { alert('Cole os dados primeiro!'); return; }
+  if (!confirm('⚠️ Isso vai SUBSTITUIR todos os dados atuais. Tem certeza?')) return;
+  try {
+    const dados = JSON.parse(decodeURIComponent(escape(atob(texto))));
+    escala = dados.escala || {};
+    if (dados.mesTravado) {
+      mesTravado = dados.mesTravado;
+      localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
+    }
+    salvar();
+    desenharTudo();
+    alert('✅ Dados importados com sucesso!');
+    document.getElementById('caixaDados').value = '';
+  } catch(e) {
+    alert('❌ Dados inválidos! Copie novamente do aparelho de origem.');
+  }
+}
+
 function esconderTodas() {
   document.querySelectorAll('#telaLogin,#telaSenhaPessoa,#telaSenhaAdmin,#telaApp').forEach(el => el.classList.add('hidden'));
 }
@@ -392,17 +439,13 @@ function destravar() {
 }
 function diasNoMes() { return new Date(anoAtual, mesAtual+1, 0).getDate(); }
 function chave(d) { return `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
-function usuarioJaMarcou(chaveDia, nome) {
-  const dia = escala[chaveDia] || {};
-  for (const p in dia) if ((dia[p] || []).includes(nome)) return true;
-  return false;
-}
 function abrirApp() {
   esconderTodas();
   document.getElementById('telaApp').classList.remove('hidden');
   document.getElementById('nomeUsuario').textContent = usuarioLogado.nome;
   document.getElementById('perfilUsuario').textContent = ehAdmin ? 'ADMIN' : 'GVC';
   document.getElementById('lblMes').textContent = mesTravado ? `🔒 ${meses[mesTravado.mes]}/${anoAtual}` : `${meses[mesAtual]}/${anoAtual}`;
+  document.getElementById('btnSync').classList.toggle('hidden', !ehAdmin);
   document.getElementById('btnTravar').classList.toggle('hidden', !(ehAdmin && !mesTravado));
   document.getElementById('btnDestravar').classList.toggle('hidden', !(ehAdmin && mesTravado));
   document.getElementById('avisoTravado').classList.toggle('hidden', !mesTravado);
@@ -596,7 +639,6 @@ function exportarXLS() {
   a.click();
 }
 
-// INICIALIZAÇÃO
 document.addEventListener('DOMContentLoaded', mostrarLogin);
 </script>
 </body>
