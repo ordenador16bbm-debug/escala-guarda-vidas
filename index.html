@@ -16,8 +16,9 @@ header h1{font-size:18px}
 .nome-btn{padding:16px;background:linear-gradient(135deg,#2980b9,#3498db);color:white;border:none;border-radius:8px;cursor:pointer;font-size:15px;text-align:left;transition:.2s}
 .nome-btn:hover{transform:translateY(-2px)}
 .nome-btn.admin{background:linear-gradient(135deg,#b00020,#d62030);grid-column:1 / -1}
+.nome-btn .cpf{font-size:12px;opacity:.8;display:block;margin-top:4px}
 .senha-box{margin-top:20px;padding:20px;background:#f9f9f9;border-radius:8px}
-.senha-box input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:6px;font-size:18px;text-align:center;letter-spacing:8px}
+.senha-box input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}
 .senha-box button{padding:12px;border:none;border-radius:6px;font-size:15px;cursor:pointer;width:100%;margin-top:8px}
 .btn-entrar{background:#006633;color:white}
 .btn-voltar{background:#eee;color:#333}
@@ -25,7 +26,6 @@ header h1{font-size:18px}
 .btn-sair{background:#d32f2f;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer}
 .btn-travar{background:#f57c00;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
 .btn-destravar{background:#2e7d32;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:bold}
-.btn-sync{background:#673ab7;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:13px}
 .aviso-travado{background:#fff3cd;color:#856404;padding:12px;border-radius:6px;border-left:4px solid #ffc107;margin-bottom:15px;font-weight:bold}
 .aviso-limite{background:#e3f2fd;color:#0d47a1;padding:10px;border-radius:6px;border-left:4px solid #2196f3;margin:10px 0}
 .calendario{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:15px 0}
@@ -38,8 +38,8 @@ header h1{font-size:18px}
 .campo label{display:block;font-weight:bold;margin-bottom:5px;font-size:13px}
 .campo select{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:13px}
 .btn-confirmar{background:#006633;color:white;border:none;padding:11px 20px;border-radius:6px;font-size:14px;cursor:pointer;margin-top:10px}
-.btn-cancelar{background:#e0e0e0;color:#333;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;margin:8px 4px}
-.btn-limpar-tudo{background:#d32f2f;color:white;border:none;padding:9px 16px;border-radius:6px;cursor:pointer;margin:8px 4px}
+.btn-cancelar{background:#e0e0e0;color:#333;border:none;padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin:8px 4px}
+.btn-limpar-tudo{background:#d32f2f;color:white;border:none;padding:9px 16px;border-radius:6px;font-size:13px;cursor:pointer;margin:8px 4px}
 .btn-excluir{background:#d32f2f;color:white;border:none;padding:1px 5px;border-radius:4px;cursor:pointer;font-size:10px;margin-left:4px}
 .tabela-wrap{overflow-x:auto;border:1px solid #ddd;border-radius:8px;background:#fff;margin-top:10px}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
@@ -53,15 +53,11 @@ td.limite-excedido{background:#ffebee}
 .exportar{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}
 .btn-pdf{background:#d32f2f;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
 .btn-planilha{background:#1976d2;color:white;border:none;padding:9px 14px;border-radius:6px;cursor:pointer}
-.area-sync{background:#f3e5f5;border-radius:8px;padding:12px;margin:10px 0}
-.area-sync textarea{width:100%;height:80px;margin:8px 0;padding:8px;border:1px solid #ccc;border-radius:6px;font-size:11px;font-family:monospace}
-.btn-copiar{background:#2962ff;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;margin:4px}
-.btn-colar{background:#2e7d32;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;margin:4px}
 @page{size:A4 landscape;margin:6mm 4mm}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff;padding:0;font-size:8px}
-  header,.top-bar,.area-gvc,.area-admin,.exportar,.btn-cancelar,.btn-limpar-tudo,.btn-confirmar,.senha-box,.lista-nomes,.btn-excluir,.aviso-limite,.calendario,.grid-campos,h3,.area-sync{display:none !important}
+  header,.top-bar,.area-gvc,.area-admin,.exportar,.btn-cancelar,.btn-limpar-tudo,.btn-confirmar,.senha-box,.lista-nomes,.btn-excluir,.aviso-limite,.calendario,.grid-campos,h3{display:none !important}
   .card{box-shadow:none;border:0;padding:0;margin:0;width:100%}
   .tabela-wrap{border:0;overflow:visible;margin:0}
   table{width:100%;table-layout:fixed}
@@ -84,6 +80,7 @@ td.limite-excedido{background:#ffebee}
   <h1>🏖️ Escala GVC — Itapoá/SC</h1>
   <p>Turno: 07:30 às 18:30 · Postos 00 a 23</p>
 </header>
+
 <div id="telaLogin" class="container">
   <div class="card">
     <h2>🔐 Acesso — clique no seu nome</h2>
@@ -92,51 +89,31 @@ td.limite-excedido{background:#ffebee}
     </div>
   </div>
 </div>
-<div id="telaSenhaPessoa" class="container hidden">
-  <div class="card">
-    <h2>🔐 Digite sua senha</h2>
-    <p style="text-align:center;margin-bottom:10px;font-weight:bold" id="nomeSenha"></p>
-    <div class="senha-box">
-      <input type="password" id="inpSenhaPessoa" placeholder="____" maxlength="4" inputmode="numeric">
-      <button class="btn-entrar" onclick="verificarSenhaPessoa()">Entrar</button>
-      <button class="btn-voltar" onclick="voltarLista()">Voltar</button>
-    </div>
-  </div>
-</div>
-<div id="telaSenhaAdmin" class="container hidden">
+
+<div id="telaSenha" class="container hidden">
   <div class="card">
     <h2>🔐 Administrador</h2>
     <div class="senha-box">
       <label style="font-weight:bold">Senha:</label>
-      <input type="password" id="inpSenhaAdmin" placeholder="Digite a senha...">
-      <button class="btn-entrar" onclick="verificarSenhaAdmin()">Entrar</button>
+      <input type="password" id="inpSenha" placeholder="Digite a senha...">
+      <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
       <button class="btn-voltar" onclick="voltarLista()">Voltar</button>
     </div>
   </div>
 </div>
+
 <div id="telaApp" class="container hidden">
   <div class="top-bar">
     <div>👤 <span id="nomeUsuario"></span> — <span id="perfilUsuario"></span></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span id="lblMes" style="font-weight:bold"></span>
-      <button id="btnSync" class="btn-sync hidden" onclick="abrirSync()">🔄 Sincronizar</button>
       <button id="btnTravar" class="btn-travar hidden" onclick="travar()">🔒 Travar</button>
       <button id="btnDestravar" class="btn-destravar hidden" onclick="destravar()">🔓 Destravar</button>
       <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
-
-  <!-- Área de Sincronização -->
-  <div id="areaSync" class="area-sync hidden">
-    <h4 style="margin:0 0 8px 0">🔄 Sincronizar entre aparelhos</h4>
-    <p style="font-size:12px;color:#666;margin:4px 0 8px">Copie os dados do computador → cole no celular → clique "Importar"</p>
-    <button class="btn-copiar" onclick="copiarDados()">📋 Copiar Dados</button>
-    <textarea id="caixaDados" placeholder="Cole os dados aqui e clique Importar"></textarea>
-    <button class="btn-colar" onclick="colarDados()">📥 Importar Dados</button>
-    <p style="font-size:11px;color:#d32f2f;margin:6px 0">⚠️ Importar substitui tudo que está no aparelho!</p>
-  </div>
-
   <div id="avisoTravado" class="aviso-travado hidden">🔒 Mês travado</div>
+
   <div id="areaGVC" class="area-gvc hidden">
     <h3>📋 Minha Escala — <span id="nomeGVC"></span></h3>
     <div class="aviso-limite">ℹ️ Selecione Posto → Dia → Confirmar</div>
@@ -151,6 +128,7 @@ td.limite-excedido{background:#ffebee}
     <button class="btn-cancelar" onclick="limparMeusDados()">🗑️ Cancelar minha escala</button>
     <p id="avisoMsg" style="color:#d32f2f;font-weight:bold;margin-top:10px;display:none"></p>
   </div>
+
   <div id="areaAdmin" class="area-admin hidden">
     <h3>📋 Escala — Administrador</h3>
     <div class="aviso-limite">📋 Cada pessoa tem cor única · Limite: 5 por posto/dia</div>
@@ -165,6 +143,7 @@ td.limite-excedido{background:#ffebee}
     <button class="btn-cancelar" onclick="limparCampos()">🗑️ Limpar campos</button>
     <button class="btn-limpar-tudo" onclick="limparTudo()">⚠️ Apagar TUDO</button>
   </div>
+
   <div class="card">
     <h3>📅 Escala — <span id="mesAno"></span></h3>
     <div class="exportar" id="areaExportar">
@@ -175,152 +154,33 @@ td.limite-excedido{background:#ffebee}
     <div class="tabela-wrap"><table id="tabela"></table></div>
   </div>
 </div>
+
 <script>
 const SENHA_ADMIN = "guarda2026";
 const chaveDados = "escala_itapoa_dados";
 const chaveTravada = "escala_travada_mes";
+const CIDADE = "Itapoá";
+const PRAIA = "Itapoá";
+const TP_ESCALA = "S";
 const LIMITE_SERVICO = 5;
 const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const postos = Array.from({length:24}, (_,i) => String(i).padStart(2,'0'));
+
 const ignorar = ['de','da','do','dos','das','e','na','no','nas','nos','a','o','os','as'];
+
 const coresFundo = [
   '#ffeb99','#ffd9b3','#ffc9c9','#f8c8f0','#dccbff','#c4e0ff','#b3e5e0','#b3f0c8',
   '#e6f5b3','#f2f2b3','#ffd966','#ffb380','#ff9999','#f299e0','#b399ff','#80b3ff',
-  '#66ccff','#66e0cc','#66e699','#ccee66','#eedd66','#ffcc66','#ff9966','#ff8080'
+  '#66ccff','#66e0cc','#66e699','#ccee66','#eedd66','#ffcc66','#ff9966','#ff8080',
+  '#e680cc','#b380ff','#8099ff','#66b3ff','#66d9cc','#66cc99','#b3dd66','#eedd44'
 ];
-
-const listaPessoas = [
-  { nome: "ADMINISTRADOR", perfil: "admin" },
-  { nome: "ADIRLEI PEDRO COELHO JÚNIOR", senha: "7193" },
-  { nome: "ALISSON DA CUNHA", senha: "4826" },
-  { nome: "ALONCIO VICENTE MARTINS", senha: "9571" },
-  { nome: "ANDERSON DE SOUZA DOMINGUES", senha: "2849" },
-  { nome: "ANDERSON JÚNIOR JUVÊNCIO", senha: "6138" },
-  { nome: "ANDERSON WILLIAM BATISTA", senha: "5927" },
-  { nome: "ANDRÉ DA SILVA OLKOSKI", senha: "8362" },
-  { nome: "ANDRE JOSE DA SILVA", senha: "1754" },
-  { nome: "ANTONIO JORGE BASTOS", senha: "3981" },
-  { nome: "ANTÔNIO MARCOS LIMA DA SILVA", senha: "7425" },
-  { nome: "ANTONIO PEDRO DA GRAÇA", senha: "9263" },
-  { nome: "ANTONIO ROGERIO DE BORBA BECKER", senha: "5817" },
-  { nome: "ARTHUR MARTINS SILVA", senha: "2496" },
-  { nome: "CARLOS ALEXANDRE SILVA DE JESUS", senha: "8631" },
-  { nome: "CARLOS EDUARDO PEREIRA AMARAL", senha: "1572" },
-  { nome: "CELSO WILKER OLIVEIRA SANTOS", senha: "4385" },
-  { nome: "CLEDISON LUIZ RAMOS DE JESUS", senha: "6914" },
-  { nome: "DANIEL AFONSO KONZEN", senha: "3728" },
-  { nome: "DANIEL SOARES GOMES", senha: "9153" },
-  { nome: "DARLIM MAURILIO RODRIGUES DE MORAES", senha: "5482" },
-  { nome: "DENIS DA SILVA OLKOSKI", senha: "1869" },
-  { nome: "EDER SOARES GOMES", senha: "7246" },
-  { nome: "EDUARDO GARCIA DE SOUZA", senha: "2935" },
-  { nome: "ELIEZER MACHADO DO ROSÁRIO", senha: "8512" },
-  { nome: "ELINAIANE DA SILVA DAVILA", senha: "4691" },
-  { nome: "EVERALDO DA SILVA NEVES", senha: "6374" },
-  { nome: "FÁBIO SOLEDADE", senha: "9825" },
-  { nome: "FABRICIO CALDERON NETO", senha: "3158" },
-  { nome: "FELIPE DOS SANTOS SILVA", senha: "5741" },
-  { nome: "FELIPE SCUZZIATO", senha: "1283" },
-  { nome: "FERNANDO FERREIRA", senha: "7962" },
-  { nome: "FRANCIELY CHAGAS DA SILVA", senha: "2539" },
-  { nome: "FRANCINE BAPTISTA DOS SANTOS", senha: "8416" },
-  { nome: "GEANDRO SOARES GOMES", senha: "6893" },
-  { nome: "GEORGE MARINHO CREDIDIO", senha: "4175" },
-  { nome: "GILSON TAVARES JÚNIOR", senha: "9328" },
-  { nome: "GUILHERME ANDRI", senha: "5681" },
-  { nome: "GUILHERME HENRIQUE PEREIRA BORGES", senha: "1947" },
-  { nome: "GUSTAVO LUIZ HITEL", senha: "7532" },
-  { nome: "GUSTAVO ROHRBACHER", senha: "3864" },
-  { nome: "HALAN CEZAR REIS", senha: "8219" },
-  { nome: "HIGOR MATEUS MOURA DA SILVA", senha: "2753" },
-  { nome: "JAIRO ROBERTO DOS SANTOS", senha: "6491" },
-  { nome: "JÉSSICA VITOLA DE CARVALHO", senha: "9186" },
-  { nome: "JOÃO PEDRO BONIN DE ALMEIDA", senha: "5327" },
-  { nome: "JOÃO VICTOR VEIGA", senha: "1654" },
-  { nome: "JOSÉ ADILSON RIBEIRO", senha: "7839" },
-  { nome: "JOSÉ ROCHA DE SOUZA NETO", senha: "4295" },
-  { nome: "JULIO WIELEWICKI FARINHA", senha: "8713" },
-  { nome: "JULIANO MARCOS ZENI", senha: "3562" },
-  { nome: "JÚLIO CESAR NASCIMENTO DOS SANTOS", senha: "6948" },
-  { nome: "LAURO WILLIAM BATISTA", senha: "2175" },
-  { nome: "LEONARDO VIEIRA DIAVÃO", senha: "9483" },
-  { nome: "LILIANE CRISTINA LICHESKI", senha: "5826" },
-  { nome: "LISANDRO FERREIRA", senha: "1397" },
-  { nome: "LUAN FERREIRA", senha: "7641" },
-  { nome: "LUIS HENRIQUE DE OLIVEIRA", senha: "3259" },
-  { nome: "LUIZ AUGUSTO MARINHO CREDIDIO", senha: "8914" },
-  { nome: "MARCELO WILLIAM XAVIER", senha: "4782" },
-  { nome: "MARCOS VINÍCIUS FERREIRA", senha: "6531" },
-  { nome: "MATEUS ALVES DA SILVA GOMES", senha: "2396" },
-  { nome: "MATHEUS ALVES DOS SANTOS", senha: "9157" },
-  { nome: "MICHAEL DA SILVA NUNES", senha: "5428" },
-  { nome: "MIGUEL DE JESUS DA SILVA", senha: "1873" },
-  { nome: "PAULO RICARDO DOS SANTOS", senha: "7265" },
-  { nome: "PEDRO AUGUSTO PEREIRA", senha: "3942" },
-  { nome: "RAFAEL MEDEIROS DUARTE", senha: "8519" },
-  { nome: "REINALDO DE SOUZA KAZMIERCZAK", senha: "4687" },
-  { nome: "RENAN AUGUSTO ROMAGNA DE PAULA", senha: "6193" },
-  { nome: "ROBERTA MARINHO GOMES", senha: "2758" },
-  { nome: "ROGÉRIO RICARDO DOS SANTOS", senha: "9346" },
-  { nome: "RYAN CORDEIRO ESCHIPIO GONÇALVES", senha: "5821" },
-  { nome: "THOMAS RODRIGO DA SILVEIRA RAMOS", senha: "1479" },
-  { nome: "TIAGO MACHADO DO ROSÁRIO", senha: "7953" },
-  { nome: "TOMÉ ONOFRE PEREIRA RAMOS", senha: "3268" },
-  { nome: "VALDIRENE PEREIRA DOS SANTOS", senha: "8692" },
-  { nome: "VANDERLEI NUNES DA SILVA", senha: "4517" },
-  { nome: "VICTOR MARINHO CREDIDIO", senha: "6834" },
-  { nome: "VINÍCIUS DO ROSÁRIO GUERREIRO", senha: "2185" },
-  { nome: "WASHINGTON OLIVEIRA SANTOS", senha: "9726" },
-  { nome: "WESLLEY DE MELO KLEIN", senha: "5349" },
-  { nome: "WILLIAN HENRIQUE DE MELO KLEIN", senha: "1963" },
-  { nome: "JOÃO GUILHERME FERREIRA LEITE", senha: "7482" },
-  { nome: "ADRIANO ROBERTO PEKOCZ VIEIRA", senha: "3591" },
-  { nome: "ALEX SANDRO CORREA DE SOUZA", senha: "8274" },
-  { nome: "ALEX HENRIQUE AMORIM", senha: "4918" },
-  { nome: "ALEF VINÍCIUS DE MELLO", senha: "6735" },
-  { nome: "ARIEL BARCELLOS ANTÔNIO", senha: "2359" },
-  { nome: "CRISTINA ALVES REINHOLD", senha: "9681" },
-  { nome: "EDNILSON MOLIN", senha: "5147" },
-  { nome: "EMERSON NUNES DO NASCIMENTO", senha: "1826" },
-  { nome: "EMILY MONTIEL SUTIL", senha: "7594" },
-  { nome: "GEOVANI DA SILVA", senha: "3482" },
-  { nome: "GUILHERME SILVA ROSA", senha: "8953" },
-  { nome: "HORTÊNCIA COSTA AMARAL", senha: "4269" },
-  { nome: "JACQUELINE IASMIN FERREIRA DE MORAES", senha: "6718" },
-  { nome: "JOÃO EMÍLIO SPECK DA CUNHA", senha: "2593" },
-  { nome: "JOÃO VITOR BERGAMO", senha: "9374" },
-  { nome: "JOSÉ FRANCISCO FILHO", senha: "5812" },
-  { nome: "KAMILA APARECIDA ZENI", senha: "1649" },
-  { nome: "LEANDRO MARTINS NEVES", senha: "7236" },
-  { nome: "LÉO RODRIGO DE SOUZA", senha: "3958" },
-  { nome: "MARCOS ANTÔNIO NICOLICHI", senha: "8427" },
-  { nome: "MARCOS PAULO DE SOUZA OLIVEIRA", senha: "5192" },
-  { nome: "MATEUS JOSÉ BARBOSA", senha: "2674" },
-  { nome: "NICOLAS JOHAN ANDRETTA MELCHERT", senha: "9835" },
-  { nome: "RENATO AUGUSTO DE BORBA BECKER", senha: "4361" },
-  { nome: "THAÍS PESSOA DOS SANTOS CHAVES", senha: "6589" },
-  { nome: "VINÍCIUS BARBOSA RITA", senha: "1257" },
-  { nome: "ARIVALDO LOPES NETO", senha: "7943" },
-  { nome: "HALEFF KEVIN DE LIMA OLIVEIRA", senha: "3716" },
-  { nome: "SUELI DOS SANTOS SOUZA", senha: "8592" },
-  { nome: "EWERTON MOURA DE FREITAS", senha: "5483" },
-  { nome: "DANIEL MARTINS", senha: "2961" },
-  { nome: "LUCAS DE SOUZA SEBASTIÃO", senha: "9174" },
-  { nome: "DARLAN LUIZ MOURA DA SILVA", senha: "6325" }
-];
-
-let usuarioLogado = null, ehAdmin = false;
-let pessoaSelecionada = null;
-let mesAtual = new Date().getMonth(), anoAtual = new Date().getFullYear();
-let diaSelAdmin = new Date().getDate(), diaSelGVC = new Date().getDate();
-let escala = {};
-let mesTravado = null;
 
 function corPorNome(nome) {
   let soma = 0;
   for(let i=0; i<nome.length; i++) soma += nome.charCodeAt(i);
   return coresFundo[soma % coresFundo.length];
 }
+
 function pegarDoisNomes(nomeCompleto) {
   if (!nomeCompleto) return '';
   const partes = nomeCompleto.trim().split(/\s+/);
@@ -336,6 +196,133 @@ function pegarDoisNomes(nomeCompleto) {
   if (!segundo) segundo = partes[partes.length - 1];
   return primeiro + ' ' + segundo;
 }
+
+const listaPessoas = [
+  { nome: "ADMINISTRADOR", perfil: "admin" },
+  { nome: "ADIRLEI PEDRO COELHO JÚNIOR" },
+  { nome: "ALISSON DA CUNHA" },
+  { nome: "ALONCIO VICENTE MARTINS" },
+  { nome: "ANDERSON DE SOUZA DOMINGUES" },
+  { nome: "ANDERSON JÚNIOR JUVÊNCIO" },
+  { nome: "ANDERSON WILLIAM BATISTA" },
+  { nome: "ANDRÉ DA SILVA OLKOSKI" },
+  { nome: "ANDRE JOSE DA SILVA" },
+  { nome: "ANTONIO JORGE BASTOS" },
+  { nome: "ANTÔNIO MARCOS LIMA DA SILVA" },
+  { nome: "ANTONIO PEDRO DA GRAÇA" },
+  { nome: "ANTONIO ROGERIO DE BORBA BECKER" },
+  { nome: "ARTHUR MARTINS SILVA" },
+  { nome: "CARLOS ALEXANDRE SILVA DE JESUS" },
+  { nome: "CARLOS EDUARDO PEREIRA AMARAL" },
+  { nome: "CELSO WILKER OLIVEIRA SANTOS" },
+  { nome: "CLEDISON LUIZ RAMOS DE JESUS" },
+  { nome: "DANIEL AFONSO KONZEN" },
+  { nome: "DANIEL SOARES GOMES" },
+  { nome: "DARLIM MAURILIO RODRIGUES DE MORAES" },
+  { nome: "DENIS DA SILVA OLKOSKI" },
+  { nome: "EDER SOARES GOMES" },
+  { nome: "EDUARDO GARCIA DE SOUZA" },
+  { nome: "ELIEZER MACHADO DO ROSÁRIO" },
+  { nome: "ELINAIANE DA SILVA DAVILA" },
+  { nome: "EVERALDO DA SILVA NEVES" },
+  { nome: "FÁBIO SOLEDADE" },
+  { nome: "FABRICIO CALDERON NETO" },
+  { nome: "FELIPE DOS SANTOS SILVA" },
+  { nome: "FELIPE SCUZZIATO" },
+  { nome: "FERNANDO FERREIRA" },
+  { nome: "FRANCIELY CHAGAS DA SILVA" },
+  { nome: "FRANCINE BAPTISTA DOS SANTOS" },
+  { nome: "GEANDRO SOARES GOMES" },
+  { nome: "GEORGE MARINHO CREDIDIO" },
+  { nome: "GILSON TAVARES JÚNIOR" },
+  { nome: "GUILHERME ANDRI" },
+  { nome: "GUILHERME HENRIQUE PEREIRA BORGES" },
+  { nome: "GUSTAVO LUIZ HITEL" },
+  { nome: "GUSTAVO ROHRBACHER" },
+  { nome: "HALAN CEZAR REIS" },
+  { nome: "HIGOR MATEUS MOURA DA SILVA" },
+  { nome: "JAIRO ROBERTO DOS SANTOS" },
+  { nome: "JÉSSICA VITOLA DE CARVALHO" },
+  { nome: "JOÃO PEDRO BONIN DE ALMEIDA" },
+  { nome: "JOÃO VICTOR VEIGA" },
+  { nome: "JOSÉ ADILSON RIBEIRO" },
+  { nome: "JOSÉ ROCHA DE SOUZA NETO" },
+  { nome: "JULIO WIELEWICKI FARINHA" },
+  { nome: "JULIANO MARCOS ZENI" },
+  { nome: "JÚLIO CESAR NASCIMENTO DOS SANTOS" },
+  { nome: "LAURO WILLIAM BATISTA" },
+  { nome: "LEONARDO VIEIRA DIAVÃO" },
+  { nome: "LILIANE CRISTINA LICHESKI" },
+  { nome: "LISANDRO FERREIRA" },
+  { nome: "LUAN FERREIRA" },
+  { nome: "LUIS HENRIQUE DE OLIVEIRA" },
+  { nome: "LUIZ AUGUSTO MARINHO CREDIDIO" },
+  { nome: "MARCELO WILLIAM XAVIER" },
+  { nome: "MARCOS VINÍCIUS FERREIRA" },
+  { nome: "MATEUS ALVES DA SILVA GOMES" },
+  { nome: "MATHEUS ALVES DOS SANTOS" },
+  { nome: "MICHAEL DA SILVA NUNES" },
+  { nome: "MIGUEL DE JESUS DA SILVA" },
+  { nome: "PAULO RICARDO DOS SANTOS" },
+  { nome: "PEDRO AUGUSTO PEREIRA" },
+  { nome: "RAFAEL MEDEIROS DUARTE" },
+  { nome: "REINALDO DE SOUZA KAZMIERCZAK" },
+  { nome: "RENAN AUGUSTO ROMAGNA DE PAULA" },
+  { nome: "ROBERTA MARINHO GOMES" },
+  { nome: "ROGÉRIO RICARDO DOS SANTOS" },
+  { nome: "RYAN CORDEIRO ESCHIPIO GONÇALVES" },
+  { nome: "THOMAS RODRIGO DA SILVEIRA RAMOS" },
+  { nome: "TIAGO MACHADO DO ROSÁRIO" },
+  { nome: "TOMÉ ONOFRE PEREIRA RAMOS" },
+  { nome: "VALDIRENE PEREIRA DOS SANTOS" },
+  { nome: "VANDERLEI NUNES DA SILVA" },
+  { nome: "VICTOR MARINHO CREDIDIO" },
+  { nome: "VINÍCIUS DO ROSÁRIO GUERREIRO" },
+  { nome: "WASHINGTON OLIVEIRA SANTOS" },
+  { nome: "WESLLEY DE MELO KLEIN" },
+  { nome: "WILLIAN HENRIQUE DE MELO KLEIN" },
+  { nome: "JOÃO GUILHERME FERREIRA LEITE" },
+  { nome: "ADRIANO ROBERTO PEKOCZ VIEIRA" },
+  { nome: "ALEX SANDRO CORREA DE SOUZA" },
+  { nome: "ALEX HENRIQUE AMORIM" },
+  { nome: "ALEF VINÍCIUS DE MELLO" },
+  { nome: "ARIEL BARCELLOS ANTÔNIO" },
+  { nome: "CRISTINA ALVES REINHOLD" },
+  { nome: "EDNILSON MOLIN" },
+  { nome: "EMERSON NUNES DO NASCIMENTO" },
+  { nome: "EMILY MONTIEL SUTIL" },
+  { nome: "GEOVANI DA SILVA" },
+  { nome: "GUILHERME SILVA ROSA" },
+  { nome: "HORTÊNCIA COSTA AMARAL" },
+  { nome: "JACQUELINE IASMIN FERREIRA DE MORAES" },
+  { nome: "JOÃO EMÍLIO SPECK DA CUNHA" },
+  { nome: "JOÃO VITOR BERGAMO" },
+  { nome: "JOSÉ FRANCISCO FILHO" },
+  { nome: "KAMILA APARECIDA ZENI" },
+  { nome: "LEANDRO MARTINS NEVES" },
+  { nome: "LÉO RODRIGO DE SOUZA" },
+  { nome: "MARCOS ANTÔNIO NICOLICHI" },
+  { nome: "MARCOS PAULO DE SOUZA OLIVEIRA" },
+  { nome: "MATEUS JOSÉ BARBOSA" },
+  { nome: "NICOLAS JOHAN ANDRETTA MELCHERT" },
+  { nome: "RENATO AUGUSTO DE BORBA BECKER" },
+  { nome: "THAÍS PESSOA DOS SANTOS CHAVES" },
+  { nome: "VINÍCIUS BARBOSA RITA" },
+  { nome: "ARIVALDO LOPES NETO" },
+  { nome: "HALEFF KEVIN DE LIMA OLIVEIRA" },
+  { nome: "SUELI DOS SANTOS SOUZA" },
+  { nome: "EWERTON MOURA DE FREITAS" },
+  { nome: "DANIEL MARTINS" },
+  { nome: "LUCAS DE SOUZA SEBASTIÃO" },
+  { nome: "DARLAN LUIZ MOURA DA SILVA" }
+];
+
+let usuarioLogado = null, ehAdmin = false;
+let mesAtual = new Date().getMonth(), anoAtual = new Date().getFullYear();
+let diaSelAdmin = new Date().getDate(), diaSelGVC = new Date().getDate();
+let escala = {};
+let mesTravado = null;
+
 function carregar() {
   try { escala = JSON.parse(localStorage.getItem(chaveDados) || '{}'); } catch { escala = {}; }
   const t = localStorage.getItem(chaveTravada);
@@ -343,92 +330,45 @@ function carregar() {
 }
 function salvar() { localStorage.setItem(chaveDados, JSON.stringify(escala)); }
 
-// FUNÇÕES DE SINCRONIZAÇÃO
-function abrirSync() {
-  document.getElementById('areaSync').classList.toggle('hidden');
-}
-function copiarDados() {
-  const dados = { escala, mesTravado };
-  const texto = btoa(unescape(encodeURIComponent(JSON.stringify(dados))));
-  document.getElementById('caixaDados').value = texto;
-  alert('✅ Dados copiados! Envie pelo WhatsApp e cole no outro aparelho.');
-}
-function colarDados() {
-  const texto = document.getElementById('caixaDados').value.trim();
-  if (!texto) { alert('Cole os dados primeiro!'); return; }
-  if (!confirm('⚠️ Isso vai SUBSTITUIR todos os dados atuais. Tem certeza?')) return;
-  try {
-    const dados = JSON.parse(decodeURIComponent(escape(atob(texto))));
-    escala = dados.escala || {};
-    if (dados.mesTravado) {
-      mesTravado = dados.mesTravado;
-      localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
-    }
-    salvar();
-    desenharTudo();
-    alert('✅ Dados importados com sucesso!');
-    document.getElementById('caixaDados').value = '';
-  } catch(e) {
-    alert('❌ Dados inválidos! Copie novamente do aparelho de origem.');
-  }
+function esconderTodas() {
+  document.querySelectorAll('#telaLogin,#telaSenha,#telaApp').forEach(el => el.classList.add('hidden'));
 }
 
-function esconderTodas() {
-  document.querySelectorAll('#telaLogin,#telaSenhaPessoa,#telaSenhaAdmin,#telaApp').forEach(el => el.classList.add('hidden'));
-}
 function mostrarLogin() {
   esconderTodas();
-  pessoaSelecionada = null;
   const lista = document.getElementById('listaNomes');
   lista.innerHTML = '';
   
   const btnAdm = document.createElement('button');
   btnAdm.className = 'nome-btn admin';
   btnAdm.textContent = '🔐 ADMINISTRADOR';
-  btnAdm.onclick = () => { esconderTodas(); document.getElementById('telaSenhaAdmin').classList.remove('hidden'); };
+  btnAdm.onclick = () => { esconderTodas(); document.getElementById('telaSenha').classList.remove('hidden'); };
   lista.appendChild(btnAdm);
   
   listaPessoas.filter(p => p.perfil !== 'admin').forEach(p => {
     const btn = document.createElement('button');
     btn.className = 'nome-btn';
     btn.textContent = p.nome;
-    btn.onclick = () => {
-      pessoaSelecionada = p;
-      document.getElementById('nomeSenha').textContent = p.nome;
-      document.getElementById('inpSenhaPessoa').value = '';
-      esconderTodas();
-      document.getElementById('telaSenhaPessoa').classList.remove('hidden');
-    };
+    btn.onclick = () => { carregar(); usuarioLogado = p; ehAdmin = false; abrirApp(); };
     lista.appendChild(btn);
   });
   
   document.getElementById('telaLogin').classList.remove('hidden');
 }
+
 function voltarLista() { mostrarLogin(); }
-function verificarSenhaPessoa() {
-  const senhaDigitada = document.getElementById('inpSenhaPessoa').value;
-  if (senhaDigitada === pessoaSelecionada.senha) {
-    usuarioLogado = pessoaSelecionada;
-    ehAdmin = false;
-    carregar();
-    abrirApp();
-  } else {
-    alert('Senha incorreta!');
-    document.getElementById('inpSenhaPessoa').value = '';
-  }
-}
-function verificarSenhaAdmin() {
-  if (document.getElementById('inpSenhaAdmin').value === SENHA_ADMIN) {
+
+function verificarSenha() {
+  if (document.getElementById('inpSenha').value === SENHA_ADMIN) {
     usuarioLogado = { nome: 'ADMINISTRADOR', perfil: 'admin' };
     ehAdmin = true;
     carregar();
     abrirApp();
-  } else {
-    alert('Senha incorreta!');
-    document.getElementById('inpSenhaAdmin').value = '';
-  }
+  } else { alert('Senha incorreta!'); document.getElementById('inpSenha').value = ''; }
 }
+
 function sair() { usuarioLogado = null; ehAdmin = false; mostrarLogin(); }
+
 function travar() {
   mesTravado = { mes: mesAtual, ano: anoAtual };
   localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
@@ -437,15 +377,21 @@ function travar() {
 function destravar() {
   if (confirm('Destravar?')) { mesTravado = null; localStorage.removeItem(chaveTravada); alert('🔓 Destravado!'); abrirApp(); }
 }
+
 function diasNoMes() { return new Date(anoAtual, mesAtual+1, 0).getDate(); }
 function chave(d) { return `${anoAtual}-${String(mesAtual+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+function usuarioJaMarcou(chaveDia, nome) {
+  const dia = escala[chaveDia] || {};
+  for (const p in dia) if ((dia[p] || []).includes(nome)) return true;
+  return false;
+}
+
 function abrirApp() {
   esconderTodas();
   document.getElementById('telaApp').classList.remove('hidden');
   document.getElementById('nomeUsuario').textContent = usuarioLogado.nome;
   document.getElementById('perfilUsuario').textContent = ehAdmin ? 'ADMIN' : 'GVC';
   document.getElementById('lblMes').textContent = mesTravado ? `🔒 ${meses[mesTravado.mes]}/${anoAtual}` : `${meses[mesAtual]}/${anoAtual}`;
-  document.getElementById('btnSync').classList.toggle('hidden', !ehAdmin);
   document.getElementById('btnTravar').classList.toggle('hidden', !(ehAdmin && !mesTravado));
   document.getElementById('btnDestravar').classList.toggle('hidden', !(ehAdmin && mesTravado));
   document.getElementById('avisoTravado').classList.toggle('hidden', !mesTravado);
@@ -456,6 +402,7 @@ function abrirApp() {
   montarSeletores();
   desenharTudo();
 }
+
 function montarSeletores() {
   const selMes = document.getElementById('selMes');
   selMes.innerHTML = ''; meses.forEach((m,i) => selMes.appendChild(new Option(`${m}/${anoAtual}`,i)));
@@ -480,166 +427,156 @@ function montarSeletores() {
   selGuardaGVC.innerHTML = '';
   selGuardaGVC.appendChild(new Option(usuarioLogado.nome, usuarioLogado.nome));
 }
-function desenharCal(containerId, diaSelecionado, ehAdminCal, callback) {
-  const c = document.getElementById(containerId);
+
+function desenharCal(container, diaSel, ehAdminCal, callback) {
+  const c = document.getElementById(container);
   if (!c) return; c.innerHTML = '';
-  const totalDias = diasNoMes();
-  for (let d = 1; d <= totalDias; d++) {
+  const q = diasNoMes();
+  for (let d=1; d<=q; d++) {
+    const ch = chave(d);
+    let tem = false;
+    if (ehAdminCal) tem = Object.keys(escala[ch]||{}).length > 0;
+    else tem = usuarioJaMarcou(ch, usuarioLogado?.nome);
     const btn = document.createElement('button');
-    btn.className = 'dia-btn';
-    if (d === diaSelecionado) btn.classList.add('selecionado');
-    const chD = chave(d);
-    let temEscala = false;
-    for (const p in escala[chD] || {}) {
-      if ((escala[chD][p] || []).length > 0) { temEscala = true; break; }
-    }
-    if (temEscala) btn.classList.add('tem-escala');
-    btn.textContent = d;
+    btn.className = 'dia-btn' + (d===diaSel ? ' selecionado' : '') + (tem ? ' tem-escala' : '');
+    btn.textContent = String(d).padStart(2,'0');
     btn.onclick = () => callback(d);
     c.appendChild(btn);
   }
 }
+
 function desenharTabela() {
   const tab = document.getElementById('tabela');
-  tab.innerHTML = '';
-  const totalDias = diasNoMes();
-  
-  const cabecalho = document.createElement('tr');
-  const thPosto = document.createElement('th');
-  thPosto.className = 'fixo'; thPosto.textContent = 'Posto';
-  cabecalho.appendChild(thPosto);
-  for (let d = 1; d <= totalDias; d++) {
-    const th = document.createElement('th');
-    th.textContent = d;
-    cabecalho.appendChild(th);
+  const q = diasNoMes();
+  let html = '<thead><tr><th class="fixo">Posto</th>';
+  for(let d=1;d<=q;d++){
+    const dt = new Date(anoAtual,mesAtual,d);
+    const sem = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][dt.getDay()];
+    html += `<th>${String(d).padStart(2,'0')}<br><small>${sem}</small></th>`;
   }
-  const thead = document.createElement('thead'); thead.appendChild(cabecalho); tab.appendChild(thead);
-  
-  const tbody = document.createElement('tbody');
-  postos.forEach(posto => {
-    const linha = document.createElement('tr');
-    const tdPosto = document.createElement('td');
-    tdPosto.className = 'fixo'; tdPosto.style.fontWeight = 'bold'; tdPosto.textContent = posto;
-    linha.appendChild(tdPosto);
-    
-    for (let d = 1; d <= totalDias; d++) {
-      const td = document.createElement('td');
-      const chD = chave(d);
-      const nomesNoPosto = (escala[chD] || {})[posto] || [];
-      
-      if (ehAdmin) {
-        nomesNoPosto.forEach(n => {
-          const div = document.createElement('div');
-          div.className = 'nome-linha';
-          div.style.background = corPorNome(n);
-          div.textContent = pegarDoisNomes(n);
-          if (ehAdmin) {
-            const btnExcluir = document.createElement('button');
-            btnExcluir.className = 'btn-excluir';
-            btnExcluir.textContent = '✕';
-            btnExcluir.onclick = (e) => { e.stopPropagation(); if(mesTravado){alert('Mês travado');return;} excluirNome(d, posto, n); };
-            div.appendChild(btnExcluir);
-          }
-          td.appendChild(div);
-        });
-        td.classList.add(nomesNoPosto.length >= LIMITE_SERVICO ? 'limite-excedido' : 'limite-ok');
-      } else {
-        const meusDados = nomesNoPosto.filter(n => n === usuarioLogado.nome);
-        if (meusDados.length) {
-          const div = document.createElement('div');
-          div.className = 'nome-linha';
-          div.style.background = corPorNome(usuarioLogado.nome);
-          div.textContent = pegarDoisNomes(usuarioLogado.nome);
-          td.appendChild(div);
-        }
+  html += '</tr></thead><tbody>';
+  let total=0;
+  postos.forEach(posto=>{
+    html += `<tr><td class="fixo"><strong>${posto}</strong></td>`;
+    for(let d=1;d<=q;d++){
+      const ch = chave(d);
+      const dia = escala[ch] || {};
+      const nomesNoPosto = dia[posto] || [];
+      const qtd = nomesNoPosto.length;
+      const classe = qtd>0 ? (qtd<=LIMITE_SERVICO ? 'limite-ok' : 'limite-excedido') : '';
+      const visiveis = ehAdmin ? nomesNoPosto : nomesNoPosto.filter(n => n === usuarioLogado?.nome);
+      if(visiveis.length) total++;
+      html += `<td class="${classe}">`;
+      if(visiveis.length){
+        html += visiveis.map(n=>{
+          const podeExcluir = ehAdmin || n === usuarioLogado?.nome;
+          const nomeExibir = ehAdmin ? pegarDoisNomes(n) : n;
+          const corFundo = corPorNome(n);
+          return `<div class="nome-linha" style="background:${corFundo}">${nomeExibir}${podeExcluir?`<button class="btn-excluir" onclick="excluirNome('${ch}','${posto}','${n}')">×</button>`:''}</div>`;
+        }).join('');
       }
-      linha.appendChild(td);
+      if(ehAdmin && qtd>0) html += `<small>${qtd}/${LIMITE_SERVICO}</small>`;
+      html += '</td>';
     }
-    tbody.appendChild(linha);
+    html += '</tr>';
   });
-  tab.appendChild(tbody);
-  document.getElementById('mesAno').textContent = `${meses[mesAtual]} / ${anoAtual}`;
+  tab.innerHTML = html+'</tbody>';
+  document.getElementById('resumo').textContent = `${total} inscrições`;
 }
+
 function desenharTudo() {
-  desenharCal('calAdmin', diaSelAdmin, true, d => { diaSelAdmin = d; desenharTudo(); });
-  desenharCal('calGVC', diaSelGVC, false, d => { diaSelGVC = d; desenharTudo(); });
+  document.getElementById('mesAno').textContent = `${meses[mesAtual]}/${anoAtual}`;
+  desenharCal('calAdmin', diaSelAdmin, true, d=>{diaSelAdmin=d;desenharTudo();});
+  desenharCal('calGVC', diaSelGVC, false, d=>{diaSelGVC=d;desenharTudo();});
   desenharTabela();
 }
+
+function excluirNome(chaveDia, posto, nome) {
+  if(!confirm(`Remover ${pegarDoisNomes(nome)} do Posto ${posto}?`)) return;
+  const dia = escala[chaveDia];
+  if(dia && dia[posto]){
+    dia[posto] = dia[posto].filter(n => n !== nome);
+    if(dia[posto].length === 0) delete dia[posto];
+    if(Object.keys(dia).length === 0) delete escala[chaveDia];
+    salvar(); desenharTudo();
+  }
+}
+
 function confirmarAdmin() {
-  if (mesTravado) { alert('Mês travado!'); return; }
   const posto = document.getElementById('selPosto').value;
   const nome = document.getElementById('selGuarda').value;
-  const chD = chave(diaSelAdmin);
-  if (!escala[chD]) escala[chD] = {};
-  if (!escala[chD][posto]) escala[chD][posto] = [];
-  if (escala[chD][posto].includes(nome)) { alert('Já está escalado!'); return; }
-  if (escala[chD][posto].length >= LIMITE_SERVICO) { alert(`Limite de ${LIMITE_SERVICO} pessoas atingido!`); return; }
-  escala[chD][posto].push(nome);
-  salvar(); desenharTudo();
+  const ch = chave(diaSelAdmin);
+  if (!escala[ch]) escala[ch] = {};
+  if (!escala[ch][posto]) escala[ch][posto] = [];
+  if (!escala[ch][posto].includes(nome)) {
+    escala[ch][posto].push(nome);
+    salvar(); desenharTudo();
+    alert(`✅ ${pegarDoisNomes(nome)} — Posto ${posto} — Dia ${diaSelAdmin}`);
+  } else { alert(`${pegarDoisNomes(nome)} já está neste posto/dia.`); }
 }
+
 function confirmarGVC() {
-  if (mesTravado) { alert('Mês travado!'); return; }
   const posto = document.getElementById('selPostoGVC').value;
+  const ch = chave(diaSelGVC);
   const nome = usuarioLogado.nome;
-  const chD = chave(diaSelGVC);
-  if (!escala[chD]) escala[chD] = {};
-  if (!escala[chD][posto]) escala[chD][posto] = [];
-  if (escala[chD][posto].includes(nome)) { alert('Já está escalado!'); return; }
-  if (escala[chD][posto].length >= LIMITE_SERVICO) { alert(`Limite de ${LIMITE_SERVICO} pessoas atingido!`); return; }
-  escala[chD][posto].push(nome);
-  salvar(); desenharTudo();
-  document.getElementById('avisoMsg').style.display = 'none';
-}
-function excluirNome(d, posto, nome) {
-  const chD = chave(d);
-  if (!escala[chD] || !escala[chD][posto]) return;
-  escala[chD][posto] = escala[chD][posto].filter(n => n !== nome);
-  if (!escala[chD][posto].length) delete escala[chD][posto];
-  salvar(); desenharTudo();
-}
-function limparCampos() {
-  document.getElementById('selPosto').value = '';
-  desenharTudo();
-}
-function limparMeusDados() {
-  if (!confirm('Remover sua escala?')) return;
-  for (let d = 1; d <= diasNoMes(); d++) {
-    const chD = chave(d);
-    for (const p in escala[chD] || {}) {
-      escala[chD][p] = (escala[chD][p] || []).filter(n => n !== usuarioLogado.nome);
-      if (!escala[chD][p].length) delete escala[chD][p];
-    }
-    if (escala[chD] && Object.keys(escala[chD]).length === 0) delete escala[chD];
+  const aviso = document.getElementById('avisoMsg');
+  if (usuarioJaMarcou(ch, nome)) {
+    aviso.textContent = '⚠️ Você já está inscrito(a) neste dia!';
+    aviso.style.display = 'block';
+    setTimeout(()=>aviso.style.display='none',4000);
+    return;
   }
+  if (!escala[ch]) escala[ch] = {};
+  if (!escala[ch][posto]) escala[ch][posto] = [];
+  escala[ch][posto].push(nome);
   salvar(); desenharTudo();
+  alert(`✅ Confirmado!\nPosto ${posto} — Dia ${diaSelGVC}`);
+}
+
+function limparCampos() { document.getElementById('selPosto').selectedIndex = 0; document.getElementById('selGuarda').selectedIndex = 0; }
+function limparMeusDados() {
+  if(confirm('Cancelar sua escala?')){
+    const ch = chave(diaSelGVC);
+    const nome = usuarioLogado.nome;
+    if(escala[ch]){
+      for(const p in escala[ch]){
+        escala[ch][p] = escala[ch][p].filter(n => n !== nome);
+        if(escala[ch][p].length === 0) delete escala[ch][p];
+      }
+      if(Object.keys(escala[ch]).length === 0) delete escala[ch];
+    }
+    salvar(); desenharTudo(); alert('✅ Cancelado!');
+  }
 }
 function limparTudo() {
-  if (!confirm('APAGAR TUDO da escala?')) return;
-  if (!confirm('Tem certeza? Isso não pode ser desfeito!')) return;
-  escala = {}; salvar(); desenharTudo();
+  if(!ehAdmin) return;
+  if(confirm('⚠️ APAGAR TUDO?')){escala={};salvar();desenharTudo();alert('✅ Limpo!');}
 }
-function gerarPDF() { window.print(); }
+
 function exportarXLS() {
-  let csv = 'Posto';
-  for (let d = 1; d <= diasNoMes(); d++) csv += `;${d}`;
-  csv += '\n';
-  postos.forEach(posto => {
-    csv += `${posto}`;
-    for (let d = 1; d <= diasNoMes(); d++) {
-      const chD = chave(d);
-      const nomes = (escala[chD] || {})[posto] || [];
-      csv += `;"${nomes.map(n => pegarDoisNomes(n)).join(' | ')}"`;
+  const linhas = [["Cidade","Praia","Nome Completo","Tp Escala","Dt Escala"]];
+  const q = diasNoMes();
+  for(let d=1;d<=q;d++){
+    const dia = escala[chave(d)] || {};
+    for(const posto in dia){
+      dia[posto].forEach(nome => {
+        linhas.push([CIDADE, PRAIA, nome, TP_ESCALA, `${String(d).padStart(2,'0')}/${String(mesAtual+1).padStart(2,'0')}/${anoAtual}`]);
+      });
     }
-    csv += '\n';
-  });
-  const blob = new Blob(['\ufeff'+csv], {type:'application/vnd.ms-excel;charset=utf-8'});
+  }
+  const csv = linhas.map(l => l.join(';')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `Escala_${meses[mesAtual]}_${anoAtual}.xls`;
   a.click();
+  URL.revokeObjectURL(a.href);
 }
 
-document.addEventListener('DOMContentLoaded', mostrarLogin);
+function gerarPDF() { window.print(); }
+
+// INICIAR
+mostrarLogin();
 </script>
 </body>
 </html>
