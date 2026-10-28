@@ -322,14 +322,48 @@ let mesAtual = new Date().getMonth(), anoAtual = new Date().getFullYear();
 let diaSelAdmin = new Date().getDate(), diaSelGVC = new Date().getDate();
 let escala = {};
 let mesTravado = null;
-
-function carregar() {
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyklX0LpVie7Nk8ZAGpESksODPTvBZM6idKEWJHRuDWjSEnE4rX1bUbbd-L4bNHzCSkpw/exec";
+async function carregar() {
+  try {
+    const res = await fetch(`${GOOGLE_SCRIPT_URL}?acao=ler`);
+    if (res.ok) {
+      const d = await res.json();
+      escala = d.escala || {};
+      mesTravado = d.mesTravado || null;
+      return;
+    }
+  } catch {}
+  // Fallback local
   try { escala = JSON.parse(localStorage.getItem(chaveDados) || '{}'); } catch { escala = {}; }
   const t = localStorage.getItem(chaveTravada);
   if (t) mesTravado = JSON.parse(t);
 }
-function salvar() { localStorage.setItem(chaveDados, JSON.stringify(escala)); }
+async function salvar() {
+  localStorage.setItem(chaveDados, JSON.stringify(escala));
+  if (mesTravado) localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
+  else localStorage.removeItem(chaveTravada);
+  
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ acao: 'salvar', escala, mesTravado })
+    });
+  } catch {}
+}
 
+// 🔄 Atualização automática — FICA NO HTML, NÃO NO Code.gs
+setInterval(async () => {
+  if (usuarioLogado) {
+    const antigo = JSON.stringify(escala);
+    await carregar();
+    if (JSON.stringify(escala) !== antigo) desenharTudo();
+  }
+}, 15000);
+setInterval
+// INICIAR
+mostrarLogin();
 function esconderTodas() {
   document.querySelectorAll('#telaLogin,#telaSenha,#telaApp').forEach(el => el.classList.add('hidden'));
 }
@@ -576,7 +610,7 @@ function exportarXLS() {
 function gerarPDF() { window.print(); }
 
 // INICIAR
-mostrarLogin();
+carregar() e salvar();
 </script>
 </body>
 </html>
