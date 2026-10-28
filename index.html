@@ -317,12 +317,175 @@ const listaPessoas = [
   { nome: "DARLAN LUIZ MOURA DA SILVA" }
 ];
 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyklX0LpVie7Nk8ZAGpESksODPTvBZM6idKEWJHRuDWjSEnE4rX1bUbbd-L4bNHzCSkpw/exec";
+
+const SENHA_ADMIN = "guarda2026";
+const chaveDados = "escala_itapoa_dados";
+const chaveTravada = "escala_travada_mes";
+const CIDADE = "Itapoá";
+const PRAIA = "Itapoá";
+const TP_ESCALA = "S";
+const LIMITE_SERVICO = 5;
+const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const postos = Array.from({length:24}, (_,i) => String(i).padStart(2,'0'));
+
+const ignorar = ['de','da','do','dos','das','e','na','no','nas','nos','a','o','os','as'];
+
+const coresFundo = [
+  '#ffeb99','#ffd9b3','#ffc9c9','#f8c8f0','#dccbff','#c4e0ff','#b3e5e0','#b3f0c8',
+  '#e6f5b3','#f2f2b3','#ffd966','#ffb380','#ff9999','#f299e0','#b399ff','#80b3ff',
+  '#66ccff','#66e0cc','#66e699','#ccee66','#eedd66','#ffcc66','#ff9966','#ff8080',
+  '#e680cc','#b380ff','#8099ff','#66b3ff','#66d9cc','#66cc99','#b3dd66','#eedd44'
+];
+
+function corPorNome(nome) {
+  let soma = 0;
+  for(let i=0; i<nome.length; i++) soma += nome.charCodeAt(i);
+  return coresFundo[soma % coresFundo.length];
+}
+
+function pegarDoisNomes(nomeCompleto) {
+  if (!nomeCompleto) return '';
+  const partes = nomeCompleto.trim().split(/\s+/);
+  if (partes.length === 1) return partes[0];
+  const primeiro = partes[0];
+  let segundo = '';
+  for (let i = 1; i < partes.length; i++) {
+    if (!ignorar.includes(partes[i].toLowerCase())) {
+      segundo = partes[i];
+      break;
+    }
+  }
+  if (!segundo) segundo = partes[partes.length - 1];
+  return primeiro + ' ' + segundo;
+}
+
+const listaPessoas = [
+  { nome: "ADMINISTRADOR", perfil: "admin" },
+  { nome: "ADIRLEI PEDRO COELHO JÚNIOR" },
+  { nome: "ALISSON DA CUNHA" },
+  { nome: "ALONCIO VICENTE MARTINS" },
+  { nome: "ANDERSON DE SOUZA DOMINGUES" },
+  { nome: "ANDERSON JÚNIOR JUVÊNCIO" },
+  { nome: "ANDERSON WILLIAM BATISTA" },
+  { nome: "ANDRÉ DA SILVA OLKOSKI" },
+  { nome: "ANDRE JOSE DA SILVA" },
+  { nome: "ANTONIO JORGE BASTOS" },
+  { nome: "ANTÔNIO MARCOS LIMA DA SILVA" },
+  { nome: "ANTONIO PEDRO DA GRAÇA" },
+  { nome: "ANTONIO ROGERIO DE BORBA BECKER" },
+  { nome: "ARTHUR MARTINS SILVA" },
+  { nome: "CARLOS ALEXANDRE SILVA DE JESUS" },
+  { nome: "CARLOS EDUARDO PEREIRA AMARAL" },
+  { nome: "CELSO WILKER OLIVEIRA SANTOS" },
+  { nome: "CLEDISON LUIZ RAMOS DE JESUS" },
+  { nome: "DANIEL AFONSO KONZEN" },
+  { nome: "DANIEL SOARES GOMES" },
+  { nome: "DARLIM MAURILIO RODRIGUES DE MORAES" },
+  { nome: "DENIS DA SILVA OLKOSKI" },
+  { nome: "EDER SOARES GOMES" },
+  { nome: "EDUARDO GARCIA DE SOUZA" },
+  { nome: "ELIEZER MACHADO DO ROSÁRIO" },
+  { nome: "ELINAIANE DA SILVA DAVILA" },
+  { nome: "EVERALDO DA SILVA NEVES" },
+  { nome: "FÁBIO SOLEDADE" },
+  { nome: "FABRICIO CALDERON NETO" },
+  { nome: "FELIPE DOS SANTOS SILVA" },
+  { nome: "FELIPE SCUZZIATO" },
+  { nome: "FERNANDO FERREIRA" },
+  { nome: "FRANCIELY CHAGAS DA SILVA" },
+  { nome: "FRANCINE BAPTISTA DOS SANTOS" },
+  { nome: "GEANDRO SOARES GOMES" },
+  { nome: "GEORGE MARINHO CREDIDIO" },
+  { nome: "GILSON TAVARES JÚNIOR" },
+  { nome: "GUILHERME ANDRI" },
+  { nome: "GUILHERME HENRIQUE PEREIRA BORGES" },
+  { nome: "GUSTAVO LUIZ HITEL" },
+  { nome: "GUSTAVO ROHRBACHER" },
+  { nome: "HALAN CEZAR REIS" },
+  { nome: "HIGOR MATEUS MOURA DA SILVA" },
+  { nome: "JAIRO ROBERTO DOS SANTOS" },
+  { nome: "JÉSSICA VITOLA DE CARVALHO" },
+  { nome: "JOÃO PEDRO BONIN DE ALMEIDA" },
+  { nome: "JOÃO VICTOR VEIGA" },
+  { nome: "JOSÉ ADILSON RIBEIRO" },
+  { nome: "JOSÉ ROCHA DE SOUZA NETO" },
+  { nome: "JULIO WIELEWICKI FARINHA" },
+  { nome: "JULIANO MARCOS ZENI" },
+  { nome: "JÚLIO CESAR NASCIMENTO DOS SANTOS" },
+  { nome: "LAURO WILLIAM BATISTA" },
+  { nome: "LEONARDO VIEIRA DIAVÃO" },
+  { nome: "LILIANE CRISTINA LICHESKI" },
+  { nome: "LISANDRO FERREIRA" },
+  { nome: "LUAN FERREIRA" },
+  { nome: "LUIS HENRIQUE DE OLIVEIRA" },
+  { nome: "LUIZ AUGUSTO MARINHO CREDIDIO" },
+  { nome: "MARCELO WILLIAM XAVIER" },
+  { nome: "MARCOS VINÍCIUS FERREIRA" },
+  { nome: "MATEUS ALVES DA SILVA GOMES" },
+  { nome: "MATHEUS ALVES DOS SANTOS" },
+  { nome: "MICHAEL DA SILVA NUNES" },
+  { nome: "MIGUEL DE JESUS DA SILVA" },
+  { nome: "PAULO RICARDO DOS SANTOS" },
+  { nome: "PEDRO AUGUSTO PEREIRA" },
+  { nome: "RAFAEL MEDEIROS DUARTE" },
+  { nome: "REINALDO DE SOUZA KAZMIERCZAK" },
+  { nome: "RENAN AUGUSTO ROMAGNA DE PAULA" },
+  { nome: "ROBERTA MARINHO GOMES" },
+  { nome: "ROGÉRIO RICARDO DOS SANTOS" },
+  { nome: "RYAN CORDEIRO ESCHIPIO GONÇALVES" },
+  { nome: "THOMAS RODRIGO DA SILVEIRA RAMOS" },
+  { nome: "TIAGO MACHADO DO ROSÁRIO" },
+  { nome: "TOMÉ ONOFRE PEREIRA RAMOS" },
+  { nome: "VALDIRENE PEREIRA DOS SANTOS" },
+  { nome: "VANDERLEI NUNES DA SILVA" },
+  { nome: "VICTOR MARINHO CREDIDIO" },
+  { nome: "VINÍCIUS DO ROSÁRIO GUERREIRO" },
+  { nome: "WASHINGTON OLIVEIRA SANTOS" },
+  { nome: "WESLLEY DE MELO KLEIN" },
+  { nome: "WILLIAN HENRIQUE DE MELO KLEIN" },
+  { nome: "JOÃO GUILHERME FERREIRA LEITE" },
+  { nome: "ADRIANO ROBERTO PEKOCZ VIEIRA" },
+  { nome: "ALEX SANDRO CORREA DE SOUZA" },
+  { nome: "ALEX HENRIQUE AMORIM" },
+  { nome: "ALEF VINÍCIUS DE MELLO" },
+  { nome: "ARIEL BARCELLOS ANTÔNIO" },
+  { nome: "CRISTINA ALVES REINHOLD" },
+  { nome: "EDNILSON MOLIN" },
+  { nome: "EMERSON NUNES DO NASCIMENTO" },
+  { nome: "EMILY MONTIEL SUTIL" },
+  { nome: "GEOVANI DA SILVA" },
+  { nome: "GUILHERME SILVA ROSA" },
+  { nome: "HORTÊNCIA COSTA AMARAL" },
+  { nome: "JACQUELINE IASMIN FERREIRA DE MORAES" },
+  { nome: "JOÃO EMÍLIO SPECK DA CUNHA" },
+  { nome: "JOÃO VITOR BERGAMO" },
+  { nome: "JOSÉ FRANCISCO FILHO" },
+  { nome: "KAMILA APARECIDA ZENI" },
+  { nome: "LEANDRO MARTINS NEVES" },
+  { nome: "LÉO RODRIGO DE SOUZA" },
+  { nome: "MARCOS ANTÔNIO NICOLICHI" },
+  { nome: "MARCOS PAULO DE SOUZA OLIVEIRA" },
+  { nome: "MATEUS JOSÉ BARBOSA" },
+  { nome: "NICOLAS JOHAN ANDRETTA MELCHERT" },
+  { nome: "RENATO AUGUSTO DE BORBA BECKER" },
+  { nome: "THAÍS PESSOA DOS SANTOS CHAVES" },
+  { nome: "VINÍCIUS BARBOSA RITA" },
+  { nome: "ARIVALDO LOPES NETO" },
+  { nome: "HALEFF KEVIN DE LIMA OLIVEIRA" },
+  { nome: "SUELI DOS SANTOS SOUZA" },
+  { nome: "EWERTON MOURA DE FREITAS" },
+  { nome: "DANIEL MARTINS" },
+  { nome: "LUCAS DE SOUZA SEBASTIÃO" },
+  { nome: "DARLAN LUIZ MOURA DA SILVA" }
+];
+
 let usuarioLogado = null, ehAdmin = false;
 let mesAtual = new Date().getMonth(), anoAtual = new Date().getFullYear();
 let diaSelAdmin = new Date().getDate(), diaSelGVC = new Date().getDate();
 let escala = {};
 let mesTravado = null;
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyklX0LpVie7Nk8ZAGpESksODPTvBZM6idKEWJHRuDWjSEnE4rX1bUbbd-L4bNHzCSkpw/exec";
+
 async function carregar() {
   try {
     const res = await fetch(`${GOOGLE_SCRIPT_URL}?acao=ler`);
@@ -332,12 +495,14 @@ async function carregar() {
       mesTravado = d.mesTravado || null;
       return;
     }
-  } catch {}
-  // Fallback local
+  } catch (erro) {
+    console.log('Sem conexão com nuvem, usando local');
+  }
   try { escala = JSON.parse(localStorage.getItem(chaveDados) || '{}'); } catch { escala = {}; }
   const t = localStorage.getItem(chaveTravada);
   if (t) mesTravado = JSON.parse(t);
 }
+
 async function salvar() {
   localStorage.setItem(chaveDados, JSON.stringify(escala));
   if (mesTravado) localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
@@ -350,20 +515,11 @@ async function salvar() {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ acao: 'salvar', escala, mesTravado })
     });
-  } catch {}
+  } catch (erro) {
+    console.log('Não sincronizado na nuvem');
+  }
 }
 
-// 🔄 Atualização automática — FICA NO HTML, NÃO NO Code.gs
-setInterval(async () => {
-  if (usuarioLogado) {
-    const antigo = JSON.stringify(escala);
-    await carregar();
-    if (JSON.stringify(escala) !== antigo) desenharTudo();
-  }
-}, 15000);
-setInterval
-// INICIAR
-mostrarLogin();
 function esconderTodas() {
   document.querySelectorAll('#telaLogin,#telaSenha,#telaApp').forEach(el => el.classList.add('hidden'));
 }
@@ -383,7 +539,12 @@ function mostrarLogin() {
     const btn = document.createElement('button');
     btn.className = 'nome-btn';
     btn.textContent = p.nome;
-    btn.onclick = () => { carregar(); usuarioLogado = p; ehAdmin = false; abrirApp(); };
+    btn.onclick = async () => {
+      usuarioLogado = p; 
+      ehAdmin = false;
+      await carregar();
+      abrirApp();
+    };
     lista.appendChild(btn);
   });
   
@@ -392,24 +553,29 @@ function mostrarLogin() {
 
 function voltarLista() { mostrarLogin(); }
 
-function verificarSenha() {
+async function verificarSenha() {
   if (document.getElementById('inpSenha').value === SENHA_ADMIN) {
     usuarioLogado = { nome: 'ADMINISTRADOR', perfil: 'admin' };
     ehAdmin = true;
-    carregar();
+    await carregar();
     abrirApp();
   } else { alert('Senha incorreta!'); document.getElementById('inpSenha').value = ''; }
 }
 
 function sair() { usuarioLogado = null; ehAdmin = false; mostrarLogin(); }
 
-function travar() {
+async function travar() {
   mesTravado = { mes: mesAtual, ano: anoAtual };
-  localStorage.setItem(chaveTravada, JSON.stringify(mesTravado));
+  await salvar();
   alert('🔒 Mês travado!'); abrirApp();
 }
-function destravar() {
-  if (confirm('Destravar?')) { mesTravado = null; localStorage.removeItem(chaveTravada); alert('🔓 Destravado!'); abrirApp(); }
+
+async function destravar() {
+  if (confirm('Destravar?')) {
+    mesTravado = null;
+    await salvar();
+    alert('🔓 Destravado!'); abrirApp();
+  }
 }
 
 function diasNoMes() { return new Date(anoAtual, mesAtual+1, 0).getDate(); }
@@ -425,7 +591,7 @@ function abrirApp() {
   document.getElementById('telaApp').classList.remove('hidden');
   document.getElementById('nomeUsuario').textContent = usuarioLogado.nome;
   document.getElementById('perfilUsuario').textContent = ehAdmin ? 'ADMIN' : 'GVC';
-  document.getElementById('lblMes').textContent = mesTravado ? `🔒 ${meses[mesTravado.mes]}/${anoAtual}` : `${meses[mesAtual]}/${anoAtual}`;
+  document.getElementById('lblMes').textContent = mesTravado ? `🔒 ${meses[mesTravado.mes]}/${mesTravado.ano}` : `${meses[mesAtual]}/${anoAtual}`;
   document.getElementById('btnTravar').classList.toggle('hidden', !(ehAdmin && !mesTravado));
   document.getElementById('btnDestravar').classList.toggle('hidden', !(ehAdmin && mesTravado));
   document.getElementById('avisoTravado').classList.toggle('hidden', !mesTravado);
@@ -525,8 +691,9 @@ function desenharTudo() {
   desenharTabela();
 }
 
-function excluirNome(chaveDia, posto, nome) {
+async function excluirNome(chaveDia, posto, nome) {
   if(!confirm(`Remover ${pegarDoisNomes(nome)} do Posto ${posto}?`)) return;
+ 
   const dia = escala[chaveDia];
   if(dia && dia[posto]){
     dia[posto] = dia[posto].filter(n => n !== nome);
